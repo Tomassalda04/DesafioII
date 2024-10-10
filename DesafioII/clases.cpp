@@ -126,3 +126,103 @@ void TanqueCombustible::asignarModelosSurtidores() {
         cout << "Surtidor " << (i + 1) << ": " << modeloSurtidor[i] << endl;
     }
 }
+
+redEstaciones::redEstaciones() {
+    cantEstaciones=0;
+    nombre = nullptr;
+    codigo = nullptr;
+    gerente = nullptr;
+    regiones = nullptr;
+    estaciones = nullptr;
+}
+
+void redEstaciones::agregarEstacion(string &nombre,string &codigo,string &gerente,string &regiones, TanqueCombustible* newEstacion){
+    string* tempNombre = new string[cantEstaciones + 1];
+    string* tempCodigo = new string[cantEstaciones + 1];
+    string* tempGerente = new string[cantEstaciones + 1];
+    string* tempRegion = new string[cantEstaciones + 1];
+    TanqueCombustible** tempEstacion = new TanqueCombustible*[cantEstaciones + 1];
+    for (unsigned int i = 0; i < cantEstaciones  ; i++) {
+        tempNombre[i] = this->nombre[i];
+        tempCodigo[i] = this->codigo[i];
+        tempGerente[i] = this->gerente[i];
+        tempRegion[i] = this->regiones[i];
+        tempEstacion[i] = this->estaciones[i];
+    }
+    tempNombre[cantEstaciones] = nombre;
+    tempCodigo[cantEstaciones] = codigo;
+    tempGerente[cantEstaciones] = gerente;
+    tempRegion[cantEstaciones] = regiones;
+    tempEstacion[cantEstaciones] = newEstacion;
+
+    delete[] this->nombre;
+    delete[] this->codigo;
+    delete[] this->gerente;
+    delete[] this->regiones;
+    delete[] this->estaciones;
+
+    this->nombre = tempNombre;
+    this->codigo = tempCodigo;
+    this->gerente = tempGerente;
+    this->regiones = tempRegion;
+    this->estaciones = tempEstacion;
+
+    cantEstaciones++;
+}
+
+void redEstaciones::eliminarEstacion(string &cod){
+    int codEliminar=-1;
+    for(unsigned int i=0;i<cantEstaciones;i++){
+        if(codigo[i]==cod){
+            codEliminar=i;
+            break;
+        }
+    }
+    string* tempNombre = new string[cantEstaciones - 1];
+    string* tempCodigo = new string[cantEstaciones - 1];
+    string* tempGerente = new string[cantEstaciones - 1];
+    string* tempRegion = new string[cantEstaciones - 1];
+    TanqueCombustible** tempEstaciones = new TanqueCombustible*[cantEstaciones - 1];
+    unsigned int control = 0;
+    for(unsigned int i=0;i<cantEstaciones;i++){
+        if(codigo[i]!=cod){
+            tempNombre[i] = this->nombre[i];
+            tempCodigo[i] = this->codigo[i];
+            tempGerente[i] = this->gerente[i];
+            tempRegion[i] = this->regiones[i];
+            tempEstaciones[control] = this->estaciones[i];
+            control++;
+        }
+    }
+    delete estaciones[codEliminar];
+    delete[] this->nombre;
+    delete[] this->codigo;
+    delete[] this->gerente;
+    delete[] this->regiones;
+    delete[] this->estaciones;
+
+    this->nombre = tempNombre;
+    this->codigo = tempCodigo;
+    this->gerente = tempGerente;
+    this->regiones = tempRegion;
+    this->estaciones = tempEstaciones;
+    cantEstaciones--;
+}
+void redEstaciones::getredEstaciones(){
+    for(unsigned int i=0;i<cantEstaciones;i++){
+        cout<<nombre[i]<<endl;
+        cout<<codigo[i]<<endl;
+        cout<<gerente[i]<<endl;
+        cout<<regiones[i]<<endl;
+        cout << "Combustible Regular: " << estaciones[i]->obtenerCantidadCombustible("Regular") << " litros" << endl;
+        cout << "Combustible Premium: " << estaciones[i]->obtenerCantidadCombustible("Premium") << " litros" << endl;
+        cout << "Combustible EcoExtra: " << estaciones[i]->obtenerCantidadCombustible("EcoExtra") << " litros" << endl;
+        cout<<"Surtidores:"<<static_cast<int>(estaciones[i]->obtenerSurtidores())<<endl;
+        cout << "Naves: " << static_cast<int>(estaciones[i]->obtenerNaves()) << endl;
+    }
+}
+
+string redEstaciones::getCodigo(int index){
+    string tempCodigo= codigo[index];
+    return tempCodigo;
+}

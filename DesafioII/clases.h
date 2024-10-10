@@ -29,4 +29,21 @@ public:
 
 
 };
+
+class redEstaciones{
+private:
+    TanqueCombustible** estaciones;
+    string* nombre;
+    string* codigo;
+    string* gerente;
+    string* regiones;
+    int cantEstaciones;
+public:
+    redEstaciones();
+    void agregarEstacion(string &nombre,string &codigo,string &gerente,string &regiones, TanqueCombustible* newEstacion);
+    void eliminarEstacion(string &cod);
+    void getredEstaciones();
+    string getCodigo(int index);
+};
+
 #endif // CLASES_H

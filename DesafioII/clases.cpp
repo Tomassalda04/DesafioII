@@ -1,19 +1,28 @@
 #include "clases.h"
+#include "funciones.h"
 #include <iostream>
 #include <string>
 #include <cstdlib> // Para rand()
 #include <ctime>   // Para time()
 using namespace std;
+/*Constructor para la clase redEstacion
+ *Este arreglo va ir conectado a los objetos que se crean apartir de la clase EstacionServicio
+ *Dicho lo anterior si se crea un onjeto en la otra clase se tiene que llamar esta clase para agregarla
+*/
 
-TanqueCombustible::TanqueCombustible() {
-    regular = rand() % 101 + 100;  // 100 - 200 litros para Regular
-    premium = rand() % 101 + 100;  // 100 - 200 litros para Premium
-    ecoExtra = rand() % 101 + 100; // 100 - 200 litros para EcoExtra
+//Inicializacion miembro a miembro
+EstacionServicio::EstacionServicio(const string& nombre, const string& codigo, const string& gerente, const string& region,string gps[3], int &cont)
+    : nombre(nombre), codigo(codigo), gerente(gerente), region(region){
+    for (unsigned int i = 0; i < 3; i++) {
+        this->gps[i] = gps[i];
+    }
+    regular = rand() % 101 + 100;
+    premium = rand() % 101 + 100;
+    ecoExtra = rand() % 101 + 100;
     surtidores = static_cast<unsigned char>(rand() % 11 + 2);
 }
 
-float TanqueCombustible::obtenerCantidadCombustible(const string& tipo) const {
-    // Devolvemos la cantidad de combustible según el tipo solicitado
+float EstacionServicio::obtenerCantidadCombustible(const string& tipo) const {
     if (tipo == "Regular") {
         return regular;
     } else if (tipo == "Premium") {
@@ -25,11 +34,11 @@ float TanqueCombustible::obtenerCantidadCombustible(const string& tipo) const {
         return 0.0;
     }
 }
-unsigned char TanqueCombustible::obtenerSurtidores() const {
+unsigned char EstacionServicio::obtenerSurtidores() const {
     return surtidores;
 }
 
-void TanqueCombustible::ventaCombustible(const string& tipo, float cantidad) {
+void EstacionServicio::ventaCombustible(const string& tipo, float cantidad) {
     // Reducimos la cantidad de combustible según la categoría solicitada
     if (tipo == "Regular") {
         regular -= cantidad;
@@ -41,7 +50,7 @@ void TanqueCombustible::ventaCombustible(const string& tipo, float cantidad) {
         cout << "Tipo de combustible no válido. No se puede realizar la venta. " << endl;;
     }
 }
-void TanqueCombustible::modificarSurtidores() {
+void EstacionServicio::modificarSurtidores() {
     char opcion;
     int cantidad;
     int condicionFinalizacion = 0;
@@ -67,11 +76,11 @@ void TanqueCombustible::modificarSurtidores() {
                         cout << "No se pueden tener mas de 12 surtidores, por lo tanto se actualizara al maximo posible. " << endl;
                         surtidores =12;
                         cout << "Numero actualizado de surtidores: " << static_cast<int>(surtidores) << endl;
-                        cout << "Numero actualizado de naves: " << static_cast<int>(TanqueCombustible::obtenerNaves()) << endl;
+                        cout << "Numero actualizado de naves: " << static_cast<int>(EstacionServicio::obtenerNaves()) << endl;
                     }
                     else{
                         cout << "Numero actualizado de surtidores: " << static_cast<int>(surtidores) << endl;
-                        cout << "Numero actualizado de naves: " << static_cast<int>(TanqueCombustible::obtenerNaves()) << endl;
+                        cout << "Numero actualizado de naves: " << static_cast<int>(EstacionServicio::obtenerNaves()) << endl;
                     }
                 }
                 else if (opcion == 'Q' || opcion == 'q') {
@@ -82,11 +91,11 @@ void TanqueCombustible::modificarSurtidores() {
                     if (surtidores < 2){
                         cout << "No se pueden tener menos de 2 surtidores, por lo tanto se actualizara al minimo posible. " << endl;
                         cout << "Numero actualizado de surtidores: " << static_cast<int>(surtidores) << endl;
-                        cout << "Numero actualizado de naves: " << static_cast<int>(TanqueCombustible::obtenerNaves()) << endl;
+                        cout << "Numero actualizado de naves: " << static_cast<int>(EstacionServicio::obtenerNaves()) << endl;
                     }
                     else{
                         cout << "Numero actualizado de surtidores: " << static_cast<int>(surtidores) << endl;
-                        cout << "Numero actualizado de naves: " << static_cast<int>(TanqueCombustible::obtenerNaves()) << endl;
+                        cout << "Numero actualizado de naves: " << static_cast<int>(EstacionServicio::obtenerNaves()) << endl;
                     }
                 }
                 else {
@@ -101,7 +110,7 @@ void TanqueCombustible::modificarSurtidores() {
     }
 }
 
-unsigned char TanqueCombustible::obtenerNaves() {
+unsigned char EstacionServicio::obtenerNaves() {
     if (surtidores % 2 == 0){
         naves = surtidores/2;
     }
@@ -110,7 +119,7 @@ unsigned char TanqueCombustible::obtenerNaves() {
     }
     return naves;
 }
-void TanqueCombustible::asignarModelosSurtidores() {
+void EstacionServicio::asignarModelosSurtidores() {
     // Definimos los modelos disponibles
     string modelos[3] = {"S", "PMD", "PHR"};
 
@@ -127,102 +136,149 @@ void TanqueCombustible::asignarModelosSurtidores() {
     }
 }
 
+string* EstacionServicio::obtenerModelosSurtidores() {
+    return modeloSurtidor;
+}
+
+string EstacionServicio::obtenerNombre(){
+    return nombre;
+}
+
+string EstacionServicio::obtenerGerente(){
+    return gerente;
+}
+
+string EstacionServicio::obtenerRegion(){
+    return region;
+}
+
+string EstacionServicio::obtenerCodigo(){
+    return codigo;
+}
+
+string EstacionServicio::obtenerGps(){
+    return gps[0] + ", " + gps[1] + ", " + gps[2];
+}
+
 redEstaciones::redEstaciones() {
     cantEstaciones=0;
-    nombre = nullptr;
-    codigo = nullptr;
-    gerente = nullptr;
-    regiones = nullptr;
     estaciones = nullptr;
 }
 
-void redEstaciones::agregarEstacion(string &nombre,string &codigo,string &gerente,string &regiones, TanqueCombustible* newEstacion){
-    string* tempNombre = new string[cantEstaciones + 1];
-    string* tempCodigo = new string[cantEstaciones + 1];
-    string* tempGerente = new string[cantEstaciones + 1];
-    string* tempRegion = new string[cantEstaciones + 1];
-    TanqueCombustible** tempEstacion = new TanqueCombustible*[cantEstaciones + 1];
+void redEstaciones::agregarEstacion(EstacionServicio* newEstacion){
+    EstacionServicio** tempEstacion = new EstacionServicio*[cantEstaciones + 1];
     for (unsigned int i = 0; i < cantEstaciones  ; i++) {
-        tempNombre[i] = this->nombre[i];
-        tempCodigo[i] = this->codigo[i];
-        tempGerente[i] = this->gerente[i];
-        tempRegion[i] = this->regiones[i];
         tempEstacion[i] = this->estaciones[i];
     }
-    tempNombre[cantEstaciones] = nombre;
-    tempCodigo[cantEstaciones] = codigo;
-    tempGerente[cantEstaciones] = gerente;
-    tempRegion[cantEstaciones] = regiones;
     tempEstacion[cantEstaciones] = newEstacion;
-
-    delete[] this->nombre;
-    delete[] this->codigo;
-    delete[] this->gerente;
-    delete[] this->regiones;
     delete[] this->estaciones;
-
-    this->nombre = tempNombre;
-    this->codigo = tempCodigo;
-    this->gerente = tempGerente;
-    this->regiones = tempRegion;
     this->estaciones = tempEstacion;
-
     cantEstaciones++;
 }
 
 void redEstaciones::eliminarEstacion(string &cod){
     int codEliminar=-1;
     for(unsigned int i=0;i<cantEstaciones;i++){
-        if(codigo[i]==cod){
+        if(estaciones[i]->obtenerCodigo()==cod){
             codEliminar=i;
             break;
         }
     }
-    string* tempNombre = new string[cantEstaciones - 1];
-    string* tempCodigo = new string[cantEstaciones - 1];
-    string* tempGerente = new string[cantEstaciones - 1];
-    string* tempRegion = new string[cantEstaciones - 1];
-    TanqueCombustible** tempEstaciones = new TanqueCombustible*[cantEstaciones - 1];
+    EstacionServicio** tempEstaciones = new EstacionServicio*[cantEstaciones - 1];
     unsigned int control = 0;
     for(unsigned int i=0;i<cantEstaciones;i++){
-        if(codigo[i]!=cod){
-            tempNombre[i] = this->nombre[i];
-            tempCodigo[i] = this->codigo[i];
-            tempGerente[i] = this->gerente[i];
-            tempRegion[i] = this->regiones[i];
+        if(codEliminar!= i){
             tempEstaciones[control] = this->estaciones[i];
             control++;
         }
     }
     delete estaciones[codEliminar];
-    delete[] this->nombre;
-    delete[] this->codigo;
-    delete[] this->gerente;
-    delete[] this->regiones;
     delete[] this->estaciones;
-
-    this->nombre = tempNombre;
-    this->codigo = tempCodigo;
-    this->gerente = tempGerente;
-    this->regiones = tempRegion;
     this->estaciones = tempEstaciones;
     cantEstaciones--;
 }
-void redEstaciones::getredEstaciones(){
-    for(unsigned int i=0;i<cantEstaciones;i++){
-        cout<<nombre[i]<<endl;
-        cout<<codigo[i]<<endl;
-        cout<<gerente[i]<<endl;
-        cout<<regiones[i]<<endl;
-        cout << "Combustible Regular: " << estaciones[i]->obtenerCantidadCombustible("Regular") << " litros" << endl;
-        cout << "Combustible Premium: " << estaciones[i]->obtenerCantidadCombustible("Premium") << " litros" << endl;
-        cout << "Combustible EcoExtra: " << estaciones[i]->obtenerCantidadCombustible("EcoExtra") << " litros" << endl;
-        cout<<"Surtidores:"<<static_cast<int>(estaciones[i]->obtenerSurtidores())<<endl;
-        cout << "Naves: " << static_cast<int>(estaciones[i]->obtenerNaves()) << endl;
+
+void redEstaciones::fijarPrecioCombustible(){
+    for(unsigned int i = 0; i < 3; i++) {
+        if(i == 0) {
+            cout << "***REGION NORTE***" << endl << "--------------" << endl;
+            for(unsigned int j = 0; j < 3; j++) {
+                if(j == 0) {
+                    cout << "--PREMIUM--" << endl;
+                    cin >> fijarPrecio[i][j];
+                    verificarPrecioCombustible(fijarPrecio[i][j]);
+                } else if(j == 1) {
+                    cout << "--REGULAR--" << endl;
+                    cin >> fijarPrecio[i][j];
+                    verificarPrecioCombustible(fijarPrecio[i][j]);
+                } else {
+                    cout << "--ECOEXTRA--" << endl;
+                    cin >> fijarPrecio[i][j];
+                    verificarPrecioCombustible(fijarPrecio[i][j]);
+                }
+            }
+        } else if(i == 1) {
+            cout << "***REGION CENTRO***" << endl << "--------------" << endl;
+            for(unsigned int j = 0; j < 3; j++) {
+                if(j == 0) {
+                    cout << "--PREMIUM--" << endl;
+                    cin >> fijarPrecio[i][j];
+                    verificarPrecioCombustible(fijarPrecio[i][j]);
+                } else if(j == 1) {
+                    cout << "--REGULAR--" << endl;
+                    cin >> fijarPrecio[i][j];
+                    verificarPrecioCombustible(fijarPrecio[i][j]);
+                } else {
+                    cout << "--ECOEXTRA--" << endl;
+                    cin >> fijarPrecio[i][j];
+                    verificarPrecioCombustible(fijarPrecio[i][j]);
+                }
+            }
+        } else {
+            cout << "***REGION SUR***" << endl << "--------------" << endl;
+            for(unsigned int j = 0; j < 3; j++) {
+                if(j == 0) {
+                    cout << "--PREMIUM--" << endl;
+                    cin >> fijarPrecio[i][j];
+                    verificarPrecioCombustible(fijarPrecio[i][j]);
+                } else if(j == 1) {
+                    cout << "--REGULAR--" << endl;
+                    cin >> fijarPrecio[i][j];
+                    verificarPrecioCombustible(fijarPrecio[i][j]);
+                } else {
+                    cout << "--ECOEXTRA--" << endl;
+                    cin >> fijarPrecio[i][j];
+                    verificarPrecioCombustible(fijarPrecio[i][j]);
+                }
+            }
+        }
     }
 }
 
-string redEstaciones::getCodigo(int index){
-    string tempCodigo= codigo[index];
-    return tempCodigo;
+void redEstaciones::getredEstaciones(){
+    if (cantEstaciones == 0) {
+        cout << "No hay estaciones en la red." << endl;
+        return;
+    }
+    for (int i = 0; i < cantEstaciones; i++) {
+        cout << "Estacion " << (i + 1) << ":" << endl;
+        cout << "Nombre: " << estaciones[i]->obtenerNombre() << endl;
+        cout << "Codigo: " << estaciones[i]->obtenerCodigo()<< endl;
+        cout << "Gerente: " << estaciones[i]->obtenerGerente() << endl;
+        cout << "Region: " << estaciones[i]->obtenerRegion() << endl;
+        cout << "Coordenadas GPS: ";
+        cout << "Coordenadas GPS: " << estaciones[i]->obtenerGps() << endl;
+        cout << "Combustible Regular: " << estaciones[i]->obtenerCantidadCombustible("Regular") << " litros" << endl;
+        cout << "Combustible Premium: " << estaciones[i]->obtenerCantidadCombustible("Premium") << " litros" << endl;
+        cout << "Combustible EcoExtra: " << estaciones[i]->obtenerCantidadCombustible("EcoExtra") << " litros" << endl;
+        cout << "Numero de surtidores: " << static_cast<int>(estaciones[i]->obtenerSurtidores()) << endl;
+        cout << "Numero de naves: " << static_cast<int>(estaciones[i]->obtenerNaves()) << endl;
+        string* modelos = estaciones[i]->obtenerModelosSurtidores();
+        cout << "Modelos de surtidores: ";
+        for (unsigned char j = 0; j < estaciones[i]->obtenerSurtidores(); j++) {
+            cout << modelos[j] << (j < estaciones[i]->obtenerSurtidores() - 1 ? ", " : "");
+        }
+        cout << endl;
+        cout << "--------------------------------------" << endl;
+    }
 }

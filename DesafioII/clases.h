@@ -9,6 +9,7 @@ private:
     float regular, premium, ecoExtra;
     unsigned char surtidores, naves;
     string* modeloSurtidor;
+    bool* estadoSurtidor;
 
 public:
     EstacionServicio(const string& nombre, const string& codigo, const string& gerente, const string& region,string gps[3], int &cont);
@@ -19,6 +20,11 @@ public:
     void modificarSurtidores();
     void asignarModelosSurtidores();
     unsigned char obtenerNaves();
+    void asignarEstadoSurtidores();
+    void cambiarEstadoSurtidorPorModelo(const string& modelo, bool activar);
+    void mostrarSurtidores();
+    int contarSurtidoresActivos();
+    void simulacionVentas(float cantidadMaximaVenta);
     string* obtenerModelosSurtidores();
     string obtenerNombre();
     string obtenerCodigo();

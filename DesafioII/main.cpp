@@ -20,6 +20,7 @@ int main() {
     estacion->asignarModelosSurtidores();
     red.agregarEstacion(estacion);
     while(condicionInicial !=1){
+        cout<<"*****MENU PRINCIPAL*****"<<endl;
         cout << " ELIJA LA OPCION DE SU PREFERENCIA" << endl;
         cout << "1. GESTION DE LA RED." << endl;
         cout << "2. GESTION DE ESTACIONES DE SERVICIO." << endl;
@@ -42,7 +43,7 @@ int main() {
             switch(opcion){
             case '1':{
                 srand(static_cast<unsigned int>(time(0)));
-                cout << "***AGREGAR ESTACION DE SERVICIO.***" << endl;
+                cout << "   ***AGREGAR ESTACION DE SERVICIO.***" << endl;
                 char confi='y';
                 while (confi != 'n') {
                     // Obtener los datos de la estación
@@ -50,24 +51,25 @@ int main() {
                     cin >> nombre;
                     cout << "Ingrese el codigo: " << endl;
                     cin >> codigo;
-                    verficarCodigo(codigo);
+                    verificarCodigo(red,codigo);
                     cout << "Ingrese el gerente: " << endl;
                     cin >> gerente;
                     cout << "Ingrese la region: " << endl;
+                    cout<<"**NORTE CENTRO SUR**"<<endl;
+                    cout<<"____________________"<<endl;
                     cin >> region;
-                    verficarCodigo(codigo);
+                    verificarRegion(region);
                     for (int i = 0; i < 3; i++) {
                         cout << "Ingrese la coordenada " << (i + 1) << ": ";
                         cin >> gps[i];
-                        verificarGps(gps[i]);
                     }
+                    verificarGps(red,gps[0],gps[1],gps[2]);
                     EstacionServicio* estacion = new EstacionServicio(nombre, codigo, gerente, region, gps, cont);
                     cout << "Cantidad de combustible en el tanque:" << endl;
                     cout << "Regular: " << estacion->obtenerCantidadCombustible("Regular") << " litros" << endl;
                     cout << "Premium: " << estacion->obtenerCantidadCombustible("Premium") << " litros" << endl;
                     cout << "EcoExtra: " << estacion->obtenerCantidadCombustible("EcoExtra") << " litros" << endl;
                     cout << "Hay " << static_cast<int>(estacion->obtenerSurtidores()) << " surtidores distribuidos en " << static_cast<int>(estacion->obtenerNaves()) << " naves." << endl;
-
                     // Modificar los surtidores y asignar modelos a los surtidores
                     estacion->modificarSurtidores();
                     estacion->asignarModelosSurtidores();
@@ -82,6 +84,7 @@ int main() {
                 break;
             }
             case '2':{
+<<<<<<< Updated upstream
                 unsigned char volverPrincipal = '0';
                 while(volverPrincipal != '1'){
                     cout << "EN ESTE MOMENTO USTED PUEDE MANIPULAR LA ESTACION DE SERVICIO." << endl;
@@ -111,6 +114,12 @@ int main() {
                         string modelo;
                         char activarOpcion;
                         bool activar;
+=======
+                cout << "   ***ELIMINAR ESTACION DE SERVICIO.***" << endl;
+                char confi='y';
+                mostrarCodigos(red);
+                break;
+>>>>>>> Stashed changes
 
                         cout << "Ingrese el modelo del surtidor (S, PMD, PHR): ";
                         cin >> modelo;
@@ -157,7 +166,11 @@ int main() {
             }
             case '4':{
                 cout<<"***MOSTRAR ESTACIONES.***"<<endl;
+<<<<<<< Updated upstream
                 red.getredEstaciones();
+=======
+                red.mostrarRedEstaciones();
+>>>>>>> Stashed changes
                 break;
             }
             case '5':{

@@ -44,8 +44,9 @@ public:
     void agregarEstacion(EstacionServicio* newEstacion);
     void eliminarEstacion(string& cod);
     void fijarPrecioCombustible();
-    void getredEstaciones();
-    string getCodigo(int index);
+    EstacionServicio** getRedEstaciones();
+    void mostrarRedEstaciones();
+    int getCantEstaciones();
 };
 
 #endif // CLASES_H

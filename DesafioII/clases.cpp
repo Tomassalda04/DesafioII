@@ -302,6 +302,15 @@ string EstacionServicio::obtenerCodigo(){
 string EstacionServicio::obtenerGps(){
     return gps[0] + ", " + gps[1] + ", " + gps[2];
 }
+void EstacionServicio::setPrecioPremium(float precio){
+    premium = precio;
+}
+void EstacionServicio::setPrecioRegular(float precio){
+    regular = precio;
+}
+void EstacionServicio::setPrecioEcoExtra(float precio){
+    ecoExtra = precio;
+}
 
 redEstaciones::redEstaciones() {
     cantEstaciones=0;
@@ -344,41 +353,7 @@ void redEstaciones::eliminarEstacion(string &cod){
 void redEstaciones::fijarPrecioCombustible(){
     for(unsigned int i = 0; i < 3; i++) {
         if(i == 0) {
-            cout << "***REGION NORTE***" << endl << "--------------" << endl;
-            for(unsigned int j = 0; j < 3; j++) {
-                if(j == 0) {
-                    cout << "--PREMIUM--" << endl;
-                    cin >> fijarPrecio[i][j];
-                    verificarPrecioCombustible(fijarPrecio[i][j]);
-                } else if(j == 1) {
-                    cout << "--REGULAR--" << endl;
-                    cin >> fijarPrecio[i][j];
-                    verificarPrecioCombustible(fijarPrecio[i][j]);
-                } else {
-                    cout << "--ECOEXTRA--" << endl;
-                    cin >> fijarPrecio[i][j];
-                    verificarPrecioCombustible(fijarPrecio[i][j]);
-                }
-            }
-        } else if(i == 1) {
-            cout << "***REGION CENTRO***" << endl << "--------------" << endl;
-            for(unsigned int j = 0; j < 3; j++) {
-                if(j == 0) {
-                    cout << "--PREMIUM--" << endl;
-                    cin >> fijarPrecio[i][j];
-                    verificarPrecioCombustible(fijarPrecio[i][j]);
-                } else if(j == 1) {
-                    cout << "--REGULAR--" << endl;
-                    cin >> fijarPrecio[i][j];
-                    verificarPrecioCombustible(fijarPrecio[i][j]);
-                } else {
-                    cout << "--ECOEXTRA--" << endl;
-                    cin >> fijarPrecio[i][j];
-                    verificarPrecioCombustible(fijarPrecio[i][j]);
-                }
-            }
-        } else {
-            cout << "***REGION SUR***" << endl << "--------------" << endl;
+            cout << "               ***REGION NORTE***" << endl << "               ------------------" << endl;
             for(unsigned int j = 0; j < 3; j++) {
                 if(j == 0) {
                     cout << "--PREMIUM--" << endl;
@@ -395,7 +370,72 @@ void redEstaciones::fijarPrecioCombustible(){
                 }
             }
         }
+        else if(i == 1) {
+            cout << "               ***REGION CENTRO***" << endl << "               -------------------" << endl;
+            for(unsigned int j = 0; j < 3; j++) {
+                if(j == 0) {
+                    cout << "--PREMIUM--" << endl;
+                    cin >> fijarPrecio[i][j];
+                    verificarPrecioCombustible(fijarPrecio[i][j]);
+                } else if(j == 1) {
+                    cout << "--REGULAR--" << endl;
+                    cin >> fijarPrecio[i][j];
+                    verificarPrecioCombustible(fijarPrecio[i][j]);
+                } else {
+                    cout << "--ECOEXTRA--" << endl;
+                    cin >> fijarPrecio[i][j];
+                    verificarPrecioCombustible(fijarPrecio[i][j]);
+                }
+            }
+        }
+        else {
+            cout << "                ***REGION SUR***" << endl << "                ----------------" << endl;
+            for(unsigned int j = 0; j < 3; j++) {
+                if(j == 0) {
+                    cout << "--PREMIUM--" << endl;
+                    cin >> fijarPrecio[i][j];
+                    verificarPrecioCombustible(fijarPrecio[i][j]);
+                } else if(j == 1) {
+                    cout << "--REGULAR--" << endl;
+                    cin >> fijarPrecio[i][j];
+                    verificarPrecioCombustible(fijarPrecio[i][j]);
+                } else {
+                    cout << "--ECOEXTRA--" << endl;
+                    cin >> fijarPrecio[i][j];
+                    verificarPrecioCombustible(fijarPrecio[i][j]);
+                }
+            }
+        }
+        for (int k = 0; k < cantEstaciones; k++) {
+            if (estaciones[k]->obtenerRegion() == "NORTE" && i == 0) {
+                estaciones[k]->setPrecioPremium(stof(fijarPrecio[i][0]));
+                estaciones[k]->setPrecioRegular(stof(fijarPrecio[i][1]));
+                estaciones[k]->setPrecioEcoExtra(stof(fijarPrecio[i][2]));
+            } else if (estaciones[k]->obtenerRegion() == "CENTRO" && i == 1) {
+                estaciones[k]->setPrecioPremium(stof(fijarPrecio[i][0]));
+                estaciones[k]->setPrecioRegular(stof(fijarPrecio[i][1]));
+                estaciones[k]->setPrecioEcoExtra(stof(fijarPrecio[i][2]));
+            } else if (estaciones[k]->obtenerRegion() == "SUR" && i == 2) {
+                estaciones[k]->setPrecioPremium(stof(fijarPrecio[i][0]));
+                estaciones[k]->setPrecioRegular(stof(fijarPrecio[i][1]));
+                estaciones[k]->setPrecioEcoExtra(stof(fijarPrecio[i][2]));
+            }
+        }
+    }    
+}
+void redEstaciones::obtenerPrecios(const string& region){
+    unsigned char reg;
+    if(region=="NORTE"){
+        reg=0;
     }
+    if(region=="CENTRO"){
+        reg=1;
+    }
+    else{
+        reg=2;
+    }
+    cout<<"Precios combustible:"<<endl;
+    cout<<"PREMIUM: "<<fijarPrecio[reg][0]<<" REGULAR: "<<fijarPrecio[reg][1]<<" ECOEXTRA: "<<fijarPrecio[reg][2]<<endl;
 }
 EstacionServicio** redEstaciones::getRedEstaciones() {
     return estaciones;
@@ -416,6 +456,7 @@ void redEstaciones::mostrarRedEstaciones(){
         cout << "Combustible Regular: " << estaciones[i]->obtenerCantidadCombustible("Regular") << " litros" << endl;
         cout << "Combustible Premium: " << estaciones[i]->obtenerCantidadCombustible("Premium") << " litros" << endl;
         cout << "Combustible EcoExtra: " << estaciones[i]->obtenerCantidadCombustible("EcoExtra") << " litros" << endl;
+        obtenerPrecios(estaciones[i]->obtenerRegion());
         cout << "Numero de surtidores: " << static_cast<int>(estaciones[i]->obtenerSurtidores()) << endl;
         cout << "Numero de naves: " << static_cast<int>(estaciones[i]->obtenerNaves()) << endl;
         string* modelos = estaciones[i]->obtenerModelosSurtidores();

@@ -317,12 +317,12 @@ redEstaciones::redEstaciones() {
     estaciones = nullptr;
 }
 
-void redEstaciones::agregarEstacion(EstacionServicio* newEstacion){
+void redEstaciones::agregarEstacion(EstacionServicio* nuevaEstacion){
     EstacionServicio** tempEstacion = new EstacionServicio*[cantEstaciones + 1];
     for (unsigned int i = 0; i < cantEstaciones  ; i++) {
         tempEstacion[i] = this->estaciones[i];
     }
-    tempEstacion[cantEstaciones] = newEstacion;
+    tempEstacion[cantEstaciones] = nuevaEstacion;
     delete[] this->estaciones;
     this->estaciones = tempEstacion;
     cantEstaciones++;
@@ -441,6 +441,9 @@ EstacionServicio** redEstaciones::getRedEstaciones() {
     return estaciones;
 }
 void redEstaciones::mostrarRedEstaciones(){
+    cout<<"-----------------------------------------------"<<endl;
+    cout<<"|              COMPANIA TERMEX                |"<<endl;
+    cout<<"-----------------------------------------------"<<endl;
     if (cantEstaciones == 0) {
         cout << "No hay estaciones en la red." << endl;
         return;

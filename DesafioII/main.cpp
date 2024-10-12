@@ -84,78 +84,9 @@ int main() {
                 break;
             }
             case '2':{
-
                 cout << "   ***ELIMINAR ESTACION DE SERVICIO.***" << endl;
                 char confi='y';
                 mostrarCodigos(red);
-                break;
-
-                unsigned char volverPrincipal = '0';
-                while(volverPrincipal != '1'){
-                    cout << "EN ESTE MOMENTO USTED PUEDE MANIPULAR LA ESTACION DE SERVICIO." << endl;
-                    cout << "--- Valores iniciales de la estacion de servicio ---" << endl;
-                    cout << "Cantidad inicial de gasolina (Regular): " << estacion->obtenerCantidadCombustible("Regular") << " litros" << endl;
-                    cout << "Cantidad inicial de gasolina (Premium): " << estacion->obtenerCantidadCombustible("Premium") << " litros" << endl;
-                    cout << "Cantidad inicial de gasolina (EcoExtra): " << estacion->obtenerCantidadCombustible("EcoExtra") << " litros" << endl;
-                    cout << "---------------------------------------------------------------"<< endl;
-                    cout << "Numero inicial de surtidores: " << static_cast<int>(estacion->obtenerSurtidores()) << endl;
-                    cout << "Numero inicial de naves: " << static_cast<int>(estacion->obtenerNaves()) << endl;
-                    cout << "---------------------------------------------------------------"<< endl;
-                    estacion->mostrarSurtidores();
-                    cout << "---------------------------------------------------------------"<< endl;
-                    cout << "SELECCIONE LA OPCION QUE PREFIERA." <<endl;
-                    unsigned char opcionEstacionServicio;
-                    cout << "1. AGREGAR/ELIMINAR UN SURTIDOR A UNA E/S." << endl;
-                    cout << "2. ACTIVAR/DESACTIVAR UN SURTIDOR DE UNA E/S." <<endl;
-                    cout << "3. SIMULACION DE VENTAS DEL DIA." << endl;
-                    cout << "4. VOLVER AL MENU PRINCIPAL." << endl;
-                    cin >> opcionEstacionServicio;
-                    switch (opcionEstacionServicio) {
-                    case '1':{
-                        estacion->modificarSurtidores();
-                        break;
-                    }
-                    case '2':{
-                        string modelo;
-                        char activarOpcion;
-                        bool activar;
-                        cout << "Ingrese el modelo del surtidor (S, PMD, PHR): ";
-                        cin >> modelo;
-
-                        cout << "Desea activar (A) o desactivar (D) los surtidores de este modelo? ";
-                        cin >> activarOpcion;
-
-                        if (activarOpcion == 'A' || activarOpcion == 'a') {
-                            activar = true;
-                        } else if (activarOpcion == 'D' || activarOpcion == 'd') {
-                            activar = false;
-                        } else {
-                            cout << "OpciÃ³n no valida. Intente de nuevo." << endl;
-                            continue;  // Regresa al inicio del bucle
-                        }
-
-                        // Cambiamos el estado de los surtidores por modelo
-                        estacion->cambiarEstadoSurtidorPorModelo(modelo, activar);
-                        break;
-                    }
-                    case '3':{
-                        float cantidadMaximaVenta;
-                        cout << "Ingrese la cantidad maxima de venta por transaccion (en litros): ";
-                        cin >> cantidadMaximaVenta;
-                        cout << "---------------------------------------------------------------------------" << endl;
-                        estacion->simulacionVentas(cantidadMaximaVenta);
-                        break;
-                    }
-                    case '4':{
-                        cout << "VOLVIENDO AL MENU PRINCIPAL..." << endl;
-                        volverPrincipal= '1';
-                        break;
-                    }
-                    default:
-                        cout << "Opcion no valida. Por favor, intente de nuevo." << endl;
-                    }
-                    break;
-                }
                 break;
             }
             case '3':{
@@ -170,6 +101,7 @@ int main() {
 
             }
             }
+            break;
         }
         case '2':{
             unsigned char volverPrincipal = '0';

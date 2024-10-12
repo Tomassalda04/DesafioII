@@ -397,8 +397,10 @@ void redEstaciones::fijarPrecioCombustible(){
         }
     }
 }
-
-void redEstaciones::getredEstaciones(){
+EstacionServicio** redEstaciones::getRedEstaciones() {
+    return estaciones;
+}
+void redEstaciones::mostrarRedEstaciones(){
     if (cantEstaciones == 0) {
         cout << "No hay estaciones en la red." << endl;
         return;
@@ -424,4 +426,7 @@ void redEstaciones::getredEstaciones(){
         cout << endl;
         cout << "--------------------------------------" << endl;
     }
+}
+int redEstaciones::getCantEstaciones(){
+    return cantEstaciones;
 }

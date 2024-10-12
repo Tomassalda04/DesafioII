@@ -7,12 +7,13 @@ private:
     string nombre, codigo, gerente, region;
     string gps[3];
     float regular, premium, ecoExtra;
+    float precioRegular, precioPremium, precioEcoExtra;
     unsigned char surtidores, naves;
     string* modeloSurtidor;
     bool* estadoSurtidor;
 
 public:
-    EstacionServicio(const string& nombre, const string& codigo, const string& gerente, const string& region,string gps[3], int &cont);
+    EstacionServicio(const string& nombre, const string& codigo, const string& gerente, const string& region,string gps[3],int &cont);
     float obtenerCantidadCombustible(const string& tipo) const;
     unsigned char obtenerSurtidores() const;
     unsigned char obtenerNaves() const;
@@ -31,6 +32,9 @@ public:
     string obtenerGerente();
     string obtenerRegion();
     string obtenerGps();
+    void setPrecioPremium(float precio);
+    void setPrecioRegular(float precio);
+    void setPrecioEcoExtra(float precio);
 };
 
 class redEstaciones {
@@ -44,6 +48,7 @@ public:
     void agregarEstacion(EstacionServicio* newEstacion);
     void eliminarEstacion(string& cod);
     void fijarPrecioCombustible();
+    void obtenerPrecios(const string& region);
     EstacionServicio** getRedEstaciones();
     void mostrarRedEstaciones();
     int getCantEstaciones();

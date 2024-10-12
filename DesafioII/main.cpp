@@ -19,7 +19,16 @@ int main() {
     //estacion->modificarSurtidores();
     estacion->asignarModelosSurtidores();
     red.agregarEstacion(estacion);
+    system("cls");
+    cout<<"-----------------------------------------------"<<endl;
+    cout<<"|              COMPANIA TERMEX                |"<<endl;
+    cout<<"-----------------------------------------------"<<endl;
+    cout<<"        **********BIENVENIDO**********"<<endl;
+    cout<<""<<endl;
+    cout<<"     *****FIJAR PRECIOS COMBUSTIBLES*****"<<endl;
+    red.fijarPrecioCombustible();
     while(condicionInicial !=1){
+        cout<<endl<<endl<<endl;
         cout<<"*****MENU PRINCIPAL*****"<<endl;
         cout << " ELIJA LA OPCION DE SU PREFERENCIA" << endl;
         cout << "1. GESTION DE LA RED." << endl;
@@ -94,7 +103,8 @@ int main() {
 
             }
             case '4':{
-
+                red.mostrarRedEstaciones();
+                break;
             }
             case '5':{
                 break;

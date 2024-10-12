@@ -167,7 +167,6 @@ int main() {
             case '4':{
                 cout<<"***MOSTRAR ESTACIONES.***"<<endl;
 
-                red.getredEstaciones();
 
                 red.mostrarRedEstaciones();
 

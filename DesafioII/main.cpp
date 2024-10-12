@@ -84,7 +84,7 @@ int main() {
                 break;
             }
             case '2':{
-<<<<<<< Updated upstream
+
                 unsigned char volverPrincipal = '0';
                 while(volverPrincipal != '1'){
                     cout << "EN ESTE MOMENTO USTED PUEDE MANIPULAR LA ESTACION DE SERVICIO." << endl;
@@ -114,12 +114,12 @@ int main() {
                         string modelo;
                         char activarOpcion;
                         bool activar;
-=======
+
                 cout << "   ***ELIMINAR ESTACION DE SERVICIO.***" << endl;
                 char confi='y';
                 mostrarCodigos(red);
                 break;
->>>>>>> Stashed changes
+
 
                         cout << "Ingrese el modelo del surtidor (S, PMD, PHR): ";
                         cin >> modelo;
@@ -166,11 +166,11 @@ int main() {
             }
             case '4':{
                 cout<<"***MOSTRAR ESTACIONES.***"<<endl;
-<<<<<<< Updated upstream
+
                 red.getredEstaciones();
-=======
+
                 red.mostrarRedEstaciones();
->>>>>>> Stashed changes
+
                 break;
             }
             case '5':{

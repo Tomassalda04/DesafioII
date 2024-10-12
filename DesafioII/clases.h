@@ -45,7 +45,7 @@ private:
 
 public:
     redEstaciones();
-    void agregarEstacion(EstacionServicio* newEstacion);
+    void agregarEstacion(EstacionServicio* nuevaEstacion);
     void eliminarEstacion(string& cod);
     void fijarPrecioCombustible();
     void obtenerPrecios(const string& region);

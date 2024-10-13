@@ -234,7 +234,14 @@ int EstacionServicio::contarSurtidoresActivos() {
     }
     return contador;
 }
-
+bool EstacionServicio::surtidoresActivos(){
+    if(surtidores>0){
+        return true;
+    }
+    else if(surtidores<=0){
+        return false;
+    }
+}
 void EstacionServicio::simulacionVentas(float cantidadMaximaVenta) {
     // Usamos el número de surtidores activos para determinar el número de ventas
     int numeroSurtidoresActivos = contarSurtidoresActivos();

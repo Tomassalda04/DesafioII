@@ -2,6 +2,7 @@
 #define CLASES_H
 #include <string>
 using namespace std;
+class redEstaciones;
 class EstacionServicio {
 private:
     string nombre, codigo, gerente, region;
@@ -25,6 +26,7 @@ public:
     void cambiarEstadoSurtidorPorModelo(const string& modelo, bool activar);
     void mostrarSurtidores();
     int contarSurtidoresActivos();
+    bool surtidoresActivos();
     void simulacionVentas(float cantidadMaximaVenta);
     string* obtenerModelosSurtidores();
     string obtenerNombre();

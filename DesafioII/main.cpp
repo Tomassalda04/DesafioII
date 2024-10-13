@@ -95,7 +95,23 @@ int main() {
             case '2':{
                 cout << "   ***ELIMINAR ESTACION DE SERVICIO.***" << endl;
                 char confi='y';
-                mostrarCodigos(red);
+                while(confi != 'n' && confi != 'N'){
+                    bool continuar;
+                    string opcion;
+                    mostrarCodigos(red);
+                    cout<<"Elija el codigo que desee eliminar: "<<endl;
+                    cin>>opcion;
+                    verificarCodigoEliminar(red,opcion);
+                    continuar=verificarCodigoSurtidores(red,opcion);
+                    if(!continuar){
+                        cout<<"Saliendo al Menu Principal..."<<endl;
+                        break;
+                    }
+                    red.eliminarEstacion(opcion);
+                    cout << "Desea eliminar otra estacion? (y/n): " << endl;
+                    cin >> confi;
+                    verficarYoN(confi);
+                }
                 break;
             }
             case '3':{

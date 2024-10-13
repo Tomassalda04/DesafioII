@@ -12,4 +12,7 @@ void verificarPrecioCombustible(string& precio);
 void verficarYoN(char &opcion);
 void verficarOpcion(unsigned char& opc);
 void mostrarCodigos(redEstaciones& red);
+bool verificarSurtidoresDesactivados(redEstaciones& red, const string&cod);
+void verificarCodigoEliminar(redEstaciones& red,string& opc);
+bool verificarCodigoSurtidores(redEstaciones& red,string& opc);
 #endif // FUNCIONES_H

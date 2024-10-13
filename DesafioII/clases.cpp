@@ -452,6 +452,7 @@ void redEstaciones::fijarPrecioCombustible(){
             }
         }
     }
+
 }
 void redEstaciones::obtenerPrecios(const string& region){
     unsigned char reg;

@@ -11,29 +11,59 @@ using namespace std;
 */
 
 //Inicializacion miembro a miembro
-EstacionServicio::EstacionServicio(const string& nombre, const string& codigo, const string& gerente, const string& region,string gps[3], int &cont)
-    : nombre(nombre), codigo(codigo), gerente(gerente), region(region){
-    for (unsigned int i = 0; i < 3; i++) {
-        this->gps[i] = gps[i];
+#include <cstdlib> // Para rand() y srand()
+#include <ctime>   // Para time()
+
+#include <cstdlib> // Para rand() y srand()
+#include <ctime>   // Para time()
+
+EstacionServicio::EstacionServicio(const string& nombre, const string& codigo, const string& gerente, const string& region, string gps[3], int &cont) {
+    this->nombre = nombre;
+    this->codigo = codigo;
+    this->gerente = gerente;
+    this->region = region;
+    this->gps[0] = gps[0];
+    this->gps[1] = gps[1];
+    this->gps[2] = gps[2];
+
+    // Inicializar cantidades de combustible con un valor aleatorio entre 100 y 200
+    regular = rand() % 101 + 100; // entre 100 y 200
+    premium = rand() % 101 + 100; // entre 100 y 200
+    ecoExtra = rand() % 101 + 100; // entre 100 y 200
+
+    // Inicializar el número de surtidores con un valor entre 2 y 12
+    surtidores = rand() % 11 + 2; // entre 2 y 12
+    naves = 1; // Inicializa a 1 o al número deseado
+
+    // Inicializa los arrays dinámicos para modelos y estados de surtidores
+    modeloSurtidor = new string[surtidores]; // Crear el arreglo dinámico
+    estadoSurtidor = new bool[surtidores];   // Crear el arreglo dinámico
+
+    // Asignar modelos y estados iniciales
+    for (unsigned char i = 0; i < surtidores; ++i) {
+        modeloSurtidor[i] = "Modelo " + to_string(i + 1); // Asignar un modelo
+        estadoSurtidor[i] = true; // Inicializa todos los surtidores como activos
     }
-    regular = rand() % 101 + 100;
-    premium = rand() % 101 + 100;
-    ecoExtra = rand() % 101 + 100;
-    surtidores = static_cast<unsigned char>(rand() % 11 + 2);
+
+    // Inicializar precios
+    precioRegular = 0.0f; // Asigna un precio inicial
+    precioPremium = 0.0f; // Asigna un precio inicial
+    precioEcoExtra = 0.0f; // Asigna un precio inicial
 }
 
 float EstacionServicio::obtenerCantidadCombustible(const string& tipo) const {
     if (tipo == "Regular") {
-        return regular;
+        return regular; // Asegúrate de que 'regular' esté inicializado adecuadamente
     } else if (tipo == "Premium") {
-        return premium;
+        return premium; // Asegúrate de que 'premium' esté inicializado adecuadamente
     } else if (tipo == "EcoExtra") {
-        return ecoExtra;
+        return ecoExtra; // Asegúrate de que 'ecoExtra' esté inicializado adecuadamente
     } else {
-        cout << "Tipo de combustible no válido. " << endl;
-        return 0.0;
+        cout << "Tipo de combustible no válido." << endl;
+        return -1; // Indica un error
     }
 }
+
 unsigned char EstacionServicio::obtenerSurtidores() const {
     return surtidores;
 }
@@ -189,12 +219,12 @@ void EstacionServicio::cambiarEstadoSurtidorPorModelo(const string& modelo, bool
 }
 
 void EstacionServicio::mostrarSurtidores() {
-    cout << "Modelos de surtidores y sus estados:" << endl;
-    for (int i = 0; i < surtidores; i++) {
-        cout << "Surtidor " << (i + 1) << ": Modelo " << modeloSurtidor[i]
-             << " - " << (estadoSurtidor[i] ? "Activado" : "Desactivado") << endl;
+    cout << "Modelos de Surtidores y su Estado:" << endl;
+    for (unsigned char i = 0; i < surtidores; i++) {
+        cout << "Modelo: " << modeloSurtidor[i] << " - Estado: " << (estadoSurtidor[i] ? "Activo" : "Inactivo") << endl;
     }
 }
+
 int EstacionServicio::contarSurtidoresActivos() {
     int contador = 0;
     for (int i = 0; i < surtidores; i++) {
@@ -302,18 +332,27 @@ string EstacionServicio::obtenerCodigo(){
 string EstacionServicio::obtenerGps(){
     return gps[0] + ", " + gps[1] + ", " + gps[2];
 }
+void EstacionServicio::setPrecioPremium(float precio){
+    premium = precio;
+}
+void EstacionServicio::setPrecioRegular(float precio){
+    regular = precio;
+}
+void EstacionServicio::setPrecioEcoExtra(float precio){
+    ecoExtra = precio;
+}
 
 redEstaciones::redEstaciones() {
     cantEstaciones=0;
     estaciones = nullptr;
 }
 
-void redEstaciones::agregarEstacion(EstacionServicio* newEstacion){
+void redEstaciones::agregarEstacion(EstacionServicio* nuevaEstacion){
     EstacionServicio** tempEstacion = new EstacionServicio*[cantEstaciones + 1];
     for (unsigned int i = 0; i < cantEstaciones  ; i++) {
         tempEstacion[i] = this->estaciones[i];
     }
-    tempEstacion[cantEstaciones] = newEstacion;
+    tempEstacion[cantEstaciones] = nuevaEstacion;
     delete[] this->estaciones;
     this->estaciones = tempEstacion;
     cantEstaciones++;
@@ -344,41 +383,7 @@ void redEstaciones::eliminarEstacion(string &cod){
 void redEstaciones::fijarPrecioCombustible(){
     for(unsigned int i = 0; i < 3; i++) {
         if(i == 0) {
-            cout << "***REGION NORTE***" << endl << "--------------" << endl;
-            for(unsigned int j = 0; j < 3; j++) {
-                if(j == 0) {
-                    cout << "--PREMIUM--" << endl;
-                    cin >> fijarPrecio[i][j];
-                    verificarPrecioCombustible(fijarPrecio[i][j]);
-                } else if(j == 1) {
-                    cout << "--REGULAR--" << endl;
-                    cin >> fijarPrecio[i][j];
-                    verificarPrecioCombustible(fijarPrecio[i][j]);
-                } else {
-                    cout << "--ECOEXTRA--" << endl;
-                    cin >> fijarPrecio[i][j];
-                    verificarPrecioCombustible(fijarPrecio[i][j]);
-                }
-            }
-        } else if(i == 1) {
-            cout << "***REGION CENTRO***" << endl << "--------------" << endl;
-            for(unsigned int j = 0; j < 3; j++) {
-                if(j == 0) {
-                    cout << "--PREMIUM--" << endl;
-                    cin >> fijarPrecio[i][j];
-                    verificarPrecioCombustible(fijarPrecio[i][j]);
-                } else if(j == 1) {
-                    cout << "--REGULAR--" << endl;
-                    cin >> fijarPrecio[i][j];
-                    verificarPrecioCombustible(fijarPrecio[i][j]);
-                } else {
-                    cout << "--ECOEXTRA--" << endl;
-                    cin >> fijarPrecio[i][j];
-                    verificarPrecioCombustible(fijarPrecio[i][j]);
-                }
-            }
-        } else {
-            cout << "***REGION SUR***" << endl << "--------------" << endl;
+            cout << "               ***REGION NORTE***" << endl << "               ------------------" << endl;
             for(unsigned int j = 0; j < 3; j++) {
                 if(j == 0) {
                     cout << "--PREMIUM--" << endl;
@@ -395,12 +400,80 @@ void redEstaciones::fijarPrecioCombustible(){
                 }
             }
         }
+        else if(i == 1) {
+            cout << "               ***REGION CENTRO***" << endl << "               -------------------" << endl;
+            for(unsigned int j = 0; j < 3; j++) {
+                if(j == 0) {
+                    cout << "--PREMIUM--" << endl;
+                    cin >> fijarPrecio[i][j];
+                    verificarPrecioCombustible(fijarPrecio[i][j]);
+                } else if(j == 1) {
+                    cout << "--REGULAR--" << endl;
+                    cin >> fijarPrecio[i][j];
+                    verificarPrecioCombustible(fijarPrecio[i][j]);
+                } else {
+                    cout << "--ECOEXTRA--" << endl;
+                    cin >> fijarPrecio[i][j];
+                    verificarPrecioCombustible(fijarPrecio[i][j]);
+                }
+            }
+        }
+        else {
+            cout << "                ***REGION SUR***" << endl << "                ----------------" << endl;
+            for(unsigned int j = 0; j < 3; j++) {
+                if(j == 0) {
+                    cout << "--PREMIUM--" << endl;
+                    cin >> fijarPrecio[i][j];
+                    verificarPrecioCombustible(fijarPrecio[i][j]);
+                } else if(j == 1) {
+                    cout << "--REGULAR--" << endl;
+                    cin >> fijarPrecio[i][j];
+                    verificarPrecioCombustible(fijarPrecio[i][j]);
+                } else {
+                    cout << "--ECOEXTRA--" << endl;
+                    cin >> fijarPrecio[i][j];
+                    verificarPrecioCombustible(fijarPrecio[i][j]);
+                }
+            }
+        }
+        for (int k = 0; k < cantEstaciones; k++) {
+            if (estaciones[k]->obtenerRegion() == "NORTE" && i == 0) {
+                estaciones[k]->setPrecioPremium(stof(fijarPrecio[i][0]));
+                estaciones[k]->setPrecioRegular(stof(fijarPrecio[i][1]));
+                estaciones[k]->setPrecioEcoExtra(stof(fijarPrecio[i][2]));
+            } else if (estaciones[k]->obtenerRegion() == "CENTRO" && i == 1) {
+                estaciones[k]->setPrecioPremium(stof(fijarPrecio[i][0]));
+                estaciones[k]->setPrecioRegular(stof(fijarPrecio[i][1]));
+                estaciones[k]->setPrecioEcoExtra(stof(fijarPrecio[i][2]));
+            } else if (estaciones[k]->obtenerRegion() == "SUR" && i == 2) {
+                estaciones[k]->setPrecioPremium(stof(fijarPrecio[i][0]));
+                estaciones[k]->setPrecioRegular(stof(fijarPrecio[i][1]));
+                estaciones[k]->setPrecioEcoExtra(stof(fijarPrecio[i][2]));
+            }
+        }
     }
+}
+void redEstaciones::obtenerPrecios(const string& region){
+    unsigned char reg;
+    if(region=="NORTE"){
+        reg=0;
+    }
+    if(region=="CENTRO"){
+        reg=1;
+    }
+    else{
+        reg=2;
+    }
+    cout<<"Precios combustible:"<<endl;
+    cout<<"PREMIUM: "<<fijarPrecio[reg][0]<<" REGULAR: "<<fijarPrecio[reg][1]<<" ECOEXTRA: "<<fijarPrecio[reg][2]<<endl;
 }
 EstacionServicio** redEstaciones::getRedEstaciones() {
     return estaciones;
 }
 void redEstaciones::mostrarRedEstaciones(){
+    cout<<"-----------------------------------------------"<<endl;
+    cout<<"|              COMPANIA TERMEX                |"<<endl;
+    cout<<"-----------------------------------------------"<<endl;
     if (cantEstaciones == 0) {
         cout << "No hay estaciones en la red." << endl;
         return;
@@ -416,6 +489,7 @@ void redEstaciones::mostrarRedEstaciones(){
         cout << "Combustible Regular: " << estaciones[i]->obtenerCantidadCombustible("Regular") << " litros" << endl;
         cout << "Combustible Premium: " << estaciones[i]->obtenerCantidadCombustible("Premium") << " litros" << endl;
         cout << "Combustible EcoExtra: " << estaciones[i]->obtenerCantidadCombustible("EcoExtra") << " litros" << endl;
+        obtenerPrecios(estaciones[i]->obtenerRegion());
         cout << "Numero de surtidores: " << static_cast<int>(estaciones[i]->obtenerSurtidores()) << endl;
         cout << "Numero de naves: " << static_cast<int>(estaciones[i]->obtenerNaves()) << endl;
         string* modelos = estaciones[i]->obtenerModelosSurtidores();

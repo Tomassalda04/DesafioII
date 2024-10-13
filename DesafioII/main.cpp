@@ -129,7 +129,7 @@ int main() {
             }
             break;
         }
-        case '2': {
+         case '2': {
             // Verificar si la estación ha sido inicializada correctamente
             if (estacion == nullptr) {
                 cout << "Error: No hay estación de servicio inicializada." << endl;
@@ -209,3 +209,4 @@ int main() {
     }
     return 0;
 }
+

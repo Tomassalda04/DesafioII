@@ -8,7 +8,7 @@ private:
     string nombre, codigo, gerente, region;
     string gps[3];
     float regular, premium, ecoExtra;
-    float precioRegular, precioPremium, precioEcoExtra;
+    int precioRegularN, precioPremiumN, precioEcoExtraN,precioRegularC, precioPremiumC, precioEcoExtraC,precioRegularS, precioPremiumS, precioEcoExtraS;
     unsigned char surtidores, naves;
     string* modeloSurtidor;
     bool* estadoSurtidor;
@@ -34,9 +34,27 @@ public:
     string obtenerGerente();
     string obtenerRegion();
     string obtenerGps();
-    void setPrecioPremium(float precio);
-    void setPrecioRegular(float precio);
-    void setPrecioEcoExtra(float precio);
+    void setPrecioPremiumN(int precio);
+    void setPrecioRegularN(int precio);
+    void setPrecioEcoExtraN(int precio);
+    void setPrecioPremiumC(int precio);
+    void setPrecioRegularC(int precio);
+    void setPrecioEcoExtraC(int precio);
+    void setPrecioPremiumS(int precio);
+    void setPrecioRegularS(int precio);
+    void setPrecioEcoExtraS(int precio);
+    int getPrecioPremiumN();
+    int getPrecioRegularN();
+    int getPrecioEcoExtraN();
+    int getPrecioPremiumC();
+    int getPrecioRegularC();
+    int getPrecioEcoExtraC();
+    int getPrecioPremiumS();
+    int getPrecioRegularS();
+    int getPrecioEcoExtraS();
+    void setNombre(string _nombre);
+    void setCodigo(string _codigo);
+    void setGerente(string _gerente);
 };
 
 class redEstaciones {
@@ -50,10 +68,14 @@ public:
     void agregarEstacion(EstacionServicio* nuevaEstacion);
     void eliminarEstacion(string& cod);
     void fijarPrecioCombustible();
-    void obtenerPrecios(const string& region);
+    void precios();
+    void obtenerPrecios(string region, string codigo);
     EstacionServicio** getRedEstaciones();
     void mostrarRedEstaciones();
     int getCantEstaciones();
+    void setNombreEstacion(string _codigo,string nombre);
+    void setCodigoEstacion(string _codigo,string codigo);
+    void setGerenteEstacion(string _codigo,string gerente);
 };
 
 #endif // CLASES_H

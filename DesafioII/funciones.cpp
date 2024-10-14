@@ -150,7 +150,7 @@ void verificarPrecioCombustible(string& precio){
             }
         }
         if(aux==1){
-            cout<<"    *****ERROR*****"<<endl<<"----------Entrada invalida----------"<<endl<< "Ingrese un numero correcto para el codigo:"<<endl;
+            cout<<"    *****ERROR*****"<<endl<<"----------Entrada invalida----------"<<endl<< "Ingrese un numero correcto para el precio:"<<endl;
             cin>>precio;
         }
         else{
@@ -171,14 +171,16 @@ void verficarYoN(char &opcion){
 }
 void verficarOpcion(unsigned char& opc){
     while(true){
-        if(opc<'1'||opc>'4'){
-            cout<<"        *ERRROR*"<<endl<<"----------Entrada invalida----------"<<endl;
+        if(opc<'1'||opc>'6'){
+            cout<<"           *ERRROR*"<<endl<<"----------Entrada invalida----------"<<endl;
             cout<<"*****GESTION DE LA RED*****"<<endl;
-            cout << " ELIJA LA OPCION DE SU PREFERENCIA" << endl;
-            cout << "1. AGREGAR ESTACION DE SERVICIO." << endl;
-            cout << "2. ELIMINAR ESTACION DE SERVICIO." << endl;
-            cout << "3. CALCULAR EL MONTO TOTAL DE VENTAS." << endl;
-            cout << "4. SALIR DEL PROGRAMA" << endl;
+            cout <<" ELIJA LA OPCION DE SU PREFERENCIA" << endl;
+            cout <<"1. AGREGAR ESTACION DE SERVICIO." << endl;
+            cout <<"2. ELIMINAR ESTACION DE SERVICIO." << endl;
+            cout <<"3. CALCULAR EL MONTO TOTAL DE VENTAS." << endl;
+            cout <<"4. MODIFICAR ESTACIONES." << endl;
+            cout <<"5. MOSTRAR ESTACIONES" << endl;
+            cout <<"6. SALIR AL MENU PRINCIPAL" <<endl;
             cin>>opc;
         }
         else{
@@ -194,7 +196,7 @@ void mostrarCodigos(redEstaciones& red){
     }
 }
 
-void verificarCodigoEliminar(redEstaciones& red, string& opc){
+void verificarCodigoExistente(redEstaciones& red, string& opc){
     while(true){
         bool existe=false;
         for(unsigned int i=0;i<red.getCantEstaciones();i++){
@@ -207,7 +209,7 @@ void verificarCodigoEliminar(redEstaciones& red, string& opc){
             cout << "              *****ERROR*****" << endl;
             cout<<"          ----CODIGO NO EXISTENTE----"<<endl;
             mostrarCodigos(red);
-            cout<<"Elija el codigo que desee eliminar: "<<endl;
+            cout<<"Elija el codigo que desee: "<<endl;
             cin>>opc;
         }
         else{
@@ -241,7 +243,7 @@ bool verificarCodigoSurtidores(redEstaciones& red, string& opc){
                 mostrarCodigos(red);
                 cout<<"Elija el codigo que desee eliminar: "<<endl;
                 cin>>opc;
-                verificarCodigoEliminar(red,opc);
+                verificarCodigoExistente(red,opc);
             }
             else {
                 return false;
@@ -249,6 +251,30 @@ bool verificarCodigoSurtidores(redEstaciones& red, string& opc){
         }
         else{
             return true;
+        }
+    }
+}
+void opcionesPorModificar(redEstaciones& red,string& opc){
+    cout<<"OPCIONES PARA MODIFICAR"<<endl;
+    for(unsigned int i=0;i<red.getCantEstaciones();i++){
+        if(red.getRedEstaciones()[i]->obtenerCodigo()==opc){
+            cout<<"1. NOMBRE : "<<red.getRedEstaciones()[i]->obtenerNombre()<<endl;
+            cout<<"2. CODIGO : "<<red.getRedEstaciones()[i]->obtenerCodigo()<<endl;
+            cout<<"3. GERENTE : "<<red.getRedEstaciones()[i]->obtenerGerente()<<endl;
+        }
+    }
+    cout<<"Elija una opcion: "<<endl;
+}
+void verficarOpcionModificar(redEstaciones& red, string& opc, char& opcion){
+    while(true){
+        if(opcion!='1' && opcion!='2' && opcion!='3'){
+            cout << "              *****ERROR*****" << endl;
+            cout<<"           ----OPCION INCORRECTA----"<<endl;
+            opcionesPorModificar(red,opc);
+            cin>>opcion;
+        }
+        else{
+            break;
         }
     }
 }

@@ -13,6 +13,8 @@ void verficarYoN(char &opcion);
 void verficarOpcion(unsigned char& opc);
 void mostrarCodigos(redEstaciones& red);
 bool verificarSurtidoresDesactivados(redEstaciones& red, const string&cod);
-void verificarCodigoEliminar(redEstaciones& red,string& opc);
+void verificarCodigoExistente(redEstaciones& red,string& opc);
 bool verificarCodigoSurtidores(redEstaciones& red,string& opc);
+void opcionesPorModificar(redEstaciones& red,string& opc);
+void verficarOpcionModificar(redEstaciones& red, string& opc, char& opcion);
 #endif // FUNCIONES_H

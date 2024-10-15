@@ -228,8 +228,8 @@ int main() {
                     cin>>opcion;
                     verificarCodigoExistente(red,opcion);
                     red.simulacionVentasRed(opcion);
-                    cout << "DESEA ACTIVAR O DESACTIVAR SURTIDORES DE ESTACION? (y/n): " << endl;
-                    cin >> confi;
+                    cout << "NO SE PUEDE HACER OTRA SIMULACION DE LA ESTACION EN EL MISMO DIA: " << endl;
+                    confi = 'n';
                     verficarYoN(confi);
                     mostrarEstacion(red, opcion);
                 }
@@ -245,6 +245,26 @@ int main() {
 
             break;
         }
+         case '3':{
+            break;
+         }
+         case '4':{
+             cout << "***SIMULACION DE VENTAS DE SURTIDOR***" << endl;
+             char confi='y';
+             while(confi != 'n' && confi != 'N'){
+                 string opcion;
+                 mostrarCodigos(red);
+                 cout<<"***ELIJA EL CODIGO DE LA ESTACION DE SERVICIO QUE DESEA MANIPULAR***: "<<endl;
+                 cin>>opcion;
+                 verificarCodigoExistente(red,opcion);
+                 red.simulacionVentasSurtidorRed(opcion);
+                 cout << "DESEA VOLVER A SIMULAR? (y/n): " << endl;
+                 cin >> confi;
+                 verficarYoN(confi);
+                 mostrarEstacion(red, opcion);
+             }
+             break;
+         }
 
         }
     }

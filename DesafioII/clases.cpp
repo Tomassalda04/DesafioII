@@ -311,6 +311,42 @@ void EstacionServicio::simulacionVentas(int cantidadMaximaVenta) {
     ventasDelDia[1]=totalRegularVendido;
     ventasDelDia[2]=totalEcoExtraVendido;
 }
+void EstacionServicio::simularVentaUnica() {
+    if (contarSurtidoresActivos() == 0) {
+        cout << "No hay surtidores activos para realizar una venta." << endl;
+        return;
+    }
+    int surtidorSeleccionado;
+    do {
+        surtidorSeleccionado = rand() % surtidores;
+    } while (!estadoSurtidor[surtidorSeleccionado]);
+
+    string modeloSeleccionado = modeloSurtidor[surtidorSeleccionado];
+    string tiposCombustible[3] = {"Regular", "Premium", "EcoExtra"};
+    string tipoCombustible = tiposCombustible[rand() % 3];
+
+    int cantidadVenta = rand() % 18 + 3;
+
+    string metodosPago[3] = {"Efectivo", "Tarjeta de Crédito", "Tarjeta de Débito"};
+    string metodoPago = metodosPago[rand() % 3];
+    int cedula = rand() % 90000000 + 10000000;
+
+    if (obtenerCantidadCombustible(tipoCombustible) >= cantidadVenta) {
+        ventaCombustible(tipoCombustible, cantidadVenta);
+
+        cout << "\n*** Transaccion Exitosa ***" << endl;
+        cout << "Surtidor: " << (surtidorSeleccionado + 1) << " (Modelo: " << modeloSeleccionado << ")" << endl;
+        cout << "Metodo de Pago: " << metodoPago << endl;
+        cout << "Cedula del Cliente: " << cedula << endl;
+        cout << "Combustible: " << tipoCombustible << endl;
+        cout << "Cantidad Vendida: " << cantidadVenta << " litros" << endl;
+        cout << "Combustible Restante: " << obtenerCantidadCombustible(tipoCombustible) << " litros\n" << endl;
+    } else {
+        cout << "No hay suficiente " << tipoCombustible << " para completar la venta." << endl;
+    }
+}
+
+
 
 string* EstacionServicio::obtenerModelosSurtidores() {
     return modeloSurtidor;
@@ -651,6 +687,14 @@ void redEstaciones::simulacionVentasRed(string codigo){
             cin >> cantidadMaximaVenta;
             cout << "---------------------------------------------------------------------------" << endl;
             estaciones[i]->simulacionVentas(cantidadMaximaVenta);
+        }
+    }
+}
+void redEstaciones::simulacionVentasSurtidorRed(string codigo){
+    for(unsigned int i=0;i<cantEstaciones;i++){
+        if(codigo==estaciones[i]->obtenerCodigo()){
+            int cantidadMaximaVenta;
+            estaciones[i]->simularVentaUnica();
         }
     }
 }

@@ -2,15 +2,15 @@
 #include "funciones.h"
 #include <iostream>
 #include <string>
-#include <cstdlib> // Para rand()
-#include <ctime>   // Para time()
+#include <cstdlib>
+#include <ctime>
 using namespace std;
 
-#include <cstdlib> // Para rand() y srand()
-#include <ctime>   // Para time()
+#include <cstdlib>
+#include <ctime>
 
-#include <cstdlib> // Para rand() y srand()
-#include <ctime>   // Para time()
+#include <cstdlib>
+#include <ctime>
 
 EstacionServicio::EstacionServicio(const string& nombre, const string& codigo, const string& gerente, const string& region, string gps[3], int &cont) {
     this->nombre = nombre;
@@ -21,26 +21,21 @@ EstacionServicio::EstacionServicio(const string& nombre, const string& codigo, c
     this->gps[1] = gps[1];
     this->gps[2] = gps[2];
 
-    // Inicializar cantidades de combustible con un valor aleatorio entre 100 y 200
-    regular = rand() % 101 + 100; // entre 100 y 200
-    premium = rand() % 101 + 100; // entre 100 y 200
-    ecoExtra = rand() % 101 + 100; // entre 100 y 200
 
-    // Inicializar el número de surtidores con un valor entre 2 y 12
-    surtidores = rand() % 11 + 2; // entre 2 y 12
-    naves = 1; // Inicializa a 1 o al número deseado
+    regular = rand() % 101 + 100;
+    premium = rand() % 101 + 100;
+    ecoExtra = rand() % 101 + 100;
 
-    // Inicializa los arrays dinámicos para modelos y estados de surtidores
-    modeloSurtidor = new string[surtidores]; // Crear el arreglo dinámico
-    estadoSurtidor = new bool[surtidores];   // Crear el arreglo dinámico
+    surtidores = rand() % 11 + 2;
+    naves = 1;
 
-    // Asignar modelos y estados iniciales
+    modeloSurtidor = new string[surtidores];
+    estadoSurtidor = new bool[surtidores];
+
     for (unsigned char i = 0; i < surtidores; ++i) {
-        modeloSurtidor[i] = "Modelo " + to_string(i + 1); // Asignar un modelo
-        estadoSurtidor[i] = true; // Inicializa todos los surtidores como activos
+        modeloSurtidor[i] = "Modelo " + to_string(i + 1);
+        estadoSurtidor[i] = true;
     }
-
-    // Inicializar precios
     precioRegularN = 0.0f; // Asigna un precio inicial
     precioPremiumN = 0.0f; // Asigna un precio inicial
     precioEcoExtraN = 0.0f; // Asigna un precio inicial
@@ -54,14 +49,14 @@ EstacionServicio::EstacionServicio(const string& nombre, const string& codigo, c
 
 float EstacionServicio::obtenerCantidadCombustible(const string& tipo) const {
     if (tipo == "Regular") {
-        return regular; // Asegúrate de que 'regular' esté inicializado adecuadamente
+        return regular;
     } else if (tipo == "Premium") {
-        return premium; // Asegúrate de que 'premium' esté inicializado adecuadamente
+        return premium;
     } else if (tipo == "EcoExtra") {
-        return ecoExtra; // Asegúrate de que 'ecoExtra' esté inicializado adecuadamente
+        return ecoExtra;
     } else {
         cout << "Tipo de combustible no válido." << endl;
-        return -1; // Indica un error
+        return -1;
     }
 }
 
@@ -152,10 +147,8 @@ unsigned char EstacionServicio::obtenerNaves() {
     return naves;
 }
 void EstacionServicio::asignarModelosSurtidores() {
-    // Definimos los modelos disponibles
     string modelos[3] = {"S", "PMD", "PHR"};
 
-    // Creamos un array para almacenar el modelo de cada surtidor
     modeloSurtidor = new string[surtidores];
     for (int i = 0; i < surtidores; i++) {
         int modeloAleatorio = rand() % 3;
@@ -182,38 +175,33 @@ void EstacionServicio::asignarEstadoSurtidores() {
 void EstacionServicio::cambiarEstadoSurtidorPorModelo(const string& modelo, bool activar) {
     int contadorModelo = 0;
 
-    // Contamos cuántos surtidores hay del modelo especificado
     for (int i = 0; i < surtidores; i++) {
         if (modeloSurtidor[i] == modelo) {
             contadorModelo++;
         }
     }
 
-    // Si no hay surtidores de ese modelo, informamos al usuario y salimos
     if (contadorModelo == 0) {
         cout << "No se encontraron surtidores con el modelo " << modelo << "." << endl;
         return;
     }
 
-    // Informamos al usuario cuántos surtidores hay del modelo especificado
     cout << "Hay " << contadorModelo << " surtidores del modelo " << modelo << "." << endl;
 
-    // Pedimos al usuario cuántos surtidores quiere activar/desactivar
     int cantidad;
     cout << "¿Cuántos surtidores deseas " << (activar ? "activar" : "desactivar") << "? (máximo " << contadorModelo << "): ";
     cin >> cantidad;
 
-    // Validamos la cantidad ingresada
     if (cantidad < 1 || cantidad > contadorModelo) {
         cout << "Cantidad no válida. Debe ser entre 1 y " << contadorModelo << "." << endl;
         return;
     }
 
-    // Activamos o desactivamos la cantidad especificada de surtidores
+
     int surtidoresModificados = 0;
     for (int i = 0; i < surtidores && surtidoresModificados < cantidad; i++) {
         if (modeloSurtidor[i] == modelo) {
-            estadoSurtidor[i] = activar;  // Cambiamos el estado según el valor de `activar`
+            estadoSurtidor[i] = activar;
             surtidoresModificados++;
             cout << "Surtidor " << (i + 1) << " con modelo " << modelo << " ha sido " << (activar ? "activado." : "desactivado.") << endl;
         }
@@ -230,7 +218,7 @@ void EstacionServicio::mostrarSurtidores() {
 int EstacionServicio::contarSurtidoresActivos() {
     int contador = 0;
     for (int i = 0; i < surtidores; i++) {
-        if (estadoSurtidor[i]) {  // Verifica si el surtidor está activado
+        if (estadoSurtidor[i]) {
             contador++;
         }
     }
@@ -245,14 +233,13 @@ bool EstacionServicio::surtidoresActivos(){
     }
 }
 void EstacionServicio::simulacionVentas(int cantidadMaximaVenta) {
-    // Usamos el número de surtidores activos para determinar el número de ventas
     int numeroSurtidoresActivos = contarSurtidoresActivos();
-    int numeroVentas = rand() % numeroSurtidoresActivos + (numeroSurtidoresActivos * 2);  // Ajusta la lógica
+    int numeroVentas = rand() % numeroSurtidoresActivos + (numeroSurtidoresActivos * 2);
 
     int cantidadVenta;
     string tipoCombustible;
+    string tipoPago;
 
-    // Acumuladores para las ventas totales de cada tipo de gasolina
     int totalRegularVendido = 0;
     int totalPremiumVendido = 0;
     int totalEcoExtraVendido = 0;
@@ -260,10 +247,9 @@ void EstacionServicio::simulacionVentas(int cantidadMaximaVenta) {
     cout << "Simulacion de ventas del dia:" << endl;
 
     for (int i = 0; i < numeroVentas; i++) {
-        // Elegimos aleatoriamente el tipo de combustible
         int tipoAleatorio = rand() % 3;
+        int tipoPagoAleatorio = rand() % 3;
 
-        // Elegimos aleatoriamente la cantidad de venta (máximo hasta `cantidadMaximaVenta`)
         cantidadVenta = rand() % static_cast<int>(cantidadMaximaVenta) + 1;
 
         if (tipoAleatorio == 0) {
@@ -274,29 +260,36 @@ void EstacionServicio::simulacionVentas(int cantidadMaximaVenta) {
             tipoCombustible = "EcoExtra";
         }
 
-        // Verificamos si hay suficiente gasolina del tipo seleccionado
+        if (tipoPagoAleatorio ==0){
+            tipoPago = "EFECTIVO";
+        }
+        else if (tipoPagoAleatorio == 1){
+            tipoPago = "T DE CREDICO";
+        }else{
+            tipoPago = "T DE DEBITO";
+        }
+
         if (obtenerCantidadCombustible(tipoCombustible) >= cantidadVenta) {
             ventaCombustible(tipoCombustible, cantidadVenta);
             cout << "Venta de " << cantidadVenta << " litros de " << tipoCombustible << ". Quedan "
-                 << obtenerCantidadCombustible(tipoCombustible) << " litros." << endl;
+                 << obtenerCantidadCombustible(tipoCombustible) << " litros." << "Se pago con " << tipoPago << endl;
 
-            // Acumulamos las ventas de acuerdo al tipo de combustible
             if (tipoCombustible == "Regular") {
                 totalRegularVendido += cantidadVenta;
-            } else if (tipoCombustible == "Premium") {
+            }
+            else if (tipoCombustible == "Premium") {
                 totalPremiumVendido += cantidadVenta;
-            } else {
+            }
+            else {
                 totalEcoExtraVendido += cantidadVenta;
             }
         } else if (obtenerCantidadCombustible(tipoCombustible) > 0) {
-            // Si no hay suficiente para la venta completa, se vende lo que queda
             int cantidadRestante = obtenerCantidadCombustible(tipoCombustible);
             ventaCombustible(tipoCombustible, cantidadRestante);
-            cout << "Se intentó vender " << cantidadVenta << " litros de " << tipoCombustible
+            cout << "Se intento vender " << cantidadVenta << " litros de " << tipoCombustible
                  << ", pero solo quedan " << cantidadRestante << " litros. Vendiendo el resto." << endl;
             cout << tipoCombustible << " se ha agotado." << endl;
 
-            // Acumulamos lo que quedó por vender
             if (tipoCombustible == "Regular") {
                 totalRegularVendido += cantidadRestante;
             } else if (tipoCombustible == "Premium") {
@@ -308,8 +301,6 @@ void EstacionServicio::simulacionVentas(int cantidadMaximaVenta) {
             cout << tipoCombustible << " se ha agotado. No se puede realizar la venta." << endl;
         }
     }
-
-    // Mostramos el resumen final de las ventas
     cout << "\n--- Resumen final de ventas ---" << endl;
     cout << "Total vendido de Regular: " << totalRegularVendido << " litros." << endl;
     cout << "Total vendido de Premium: " << totalPremiumVendido << " litros." << endl;
@@ -644,7 +635,7 @@ void redEstaciones::modificarEstadoRed(string codigo){
             } else if (activarOpcion == 'D' || activarOpcion == 'd') {
                 activar = false;
             } else {
-                cout << "Opción no válida. Intente de nuevo." << endl;
+                cout << "Opcion no valida. Intente de nuevo." << endl;
                 continue; // Regresar al inicio del bucle
             }
             estaciones[i]->cambiarEstadoSurtidorPorModelo(modelo, activar);
@@ -656,7 +647,7 @@ void redEstaciones::simulacionVentasRed(string codigo){
     for(unsigned int i=0;i<cantEstaciones;i++){
         if(codigo==estaciones[i]->obtenerCodigo()){
             int cantidadMaximaVenta;
-            cout << "Ingrese la cantidad máxima de venta por transacción (en litros): ";
+            cout << "Ingrese la cantidad maxima de venta por transaccion (en litros): ";
             cin >> cantidadMaximaVenta;
             cout << "---------------------------------------------------------------------------" << endl;
             estaciones[i]->simulacionVentas(cantidadMaximaVenta);

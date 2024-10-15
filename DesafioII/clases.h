@@ -13,6 +13,7 @@ private:
     string* modeloSurtidor;
     int ventasDelDia[3]{0,0,0};
     bool* estadoSurtidor;
+    string tipoPago;
 
 public:
     EstacionServicio(const string& nombre, const string& codigo, const string& gerente, const string& region,string gps[3],int &cont);

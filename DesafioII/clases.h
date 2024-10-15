@@ -30,6 +30,7 @@ public:
     int contarSurtidoresActivos();
     bool surtidoresActivos();
     void simulacionVentas(int cantidadMaximaVenta);
+    void simularVentaUnica();
     string* obtenerModelosSurtidores();
     string obtenerNombre();
     string obtenerCodigo();
@@ -87,6 +88,7 @@ public:
     void modificarSurtidoresRed(string _codigo);
     void modificarEstadoRed(string codigo);
     void simulacionVentasRed(string codigo);
+    void simulacionVentasSurtidorRed(string codigo);
 };
 
 #endif // CLASES_H

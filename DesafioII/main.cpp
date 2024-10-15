@@ -124,19 +124,8 @@ int main() {
                 break;
             }
             case '3':{
-                cout << "***CALCULAR MONTO TOTAL DE LAS VENTAS DE UNA ESTACION DE SERVICIO.***" << endl;
-                char confi='y';
-                while(confi != 'n' && confi != 'N'){
-                    string opcion;
-                    mostrarCodigos(red);
-                    cout<<"Elija el codigo que desee: "<<endl;
-                    cin>>opcion;
-                    verificarCodigoExistente(red,opcion);
-
-                    cout << "Desea eliminar otra estacion? (y/n): " << endl;
-                    cin >> confi;
-                    verficarYoN(confi);
-                }
+                cout << "***CALCULAR MONTO TOTAL DE LAS VENTAS DE LAS ESTACIONES DE SERVICIO.***" << endl;
+                calcularVentas(red);
                 break;
 
             }

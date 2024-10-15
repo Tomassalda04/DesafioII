@@ -244,7 +244,7 @@ bool EstacionServicio::surtidoresActivos(){
         return false;
     }
 }
-int *EstacionServicio::simulacionVentas(int cantidadMaximaVenta) {
+void EstacionServicio::simulacionVentas(int cantidadMaximaVenta) {
     // Usamos el número de surtidores activos para determinar el número de ventas
     int numeroSurtidoresActivos = contarSurtidoresActivos();
     int numeroVentas = rand() % numeroSurtidoresActivos + (numeroSurtidoresActivos * 2);  // Ajusta la lógica
@@ -316,8 +316,9 @@ int *EstacionServicio::simulacionVentas(int cantidadMaximaVenta) {
     cout << "Total vendido de EcoExtra: " << totalEcoExtraVendido << " litros." << endl;
 
     cout << "Fin de la simulacion del dia." << endl;
-    int ventasDelDia[3] = {totalPremiumVendido, totalRegularVendido, totalEcoExtraVendido};
-    return ventasDelDia;
+    ventasDelDia[0]=totalPremiumVendido;
+    ventasDelDia[1]=totalRegularVendido;
+    ventasDelDia[2]=totalEcoExtraVendido;
 }
 
 string* EstacionServicio::obtenerModelosSurtidores() {
@@ -344,39 +345,30 @@ string EstacionServicio::obtenerGps(){
     return gps[0] + ", " + gps[1] + ", " + gps[2];
 }
 int EstacionServicio::getPrecioPremiumN(){
-    cout<<"Premium: "<<precioPremiumN;
     return precioPremiumN;
 }
 int EstacionServicio::getPrecioPremiumC(){
-    cout<<"Premium: "<<precioPremiumC;
     return precioPremiumC;
 }
 int EstacionServicio::getPrecioPremiumS(){
-    cout<<"Premium: "<<precioPremiumS;
     return precioPremiumS;
 }
 int EstacionServicio::getPrecioRegularN(){
-    cout<<" Regular: "<<precioRegularN;
     return precioRegularN;
 }
 int EstacionServicio::getPrecioRegularC(){
-    cout<<" Regular: "<<precioRegularC;
     return precioRegularC;
 }
 int EstacionServicio::getPrecioRegularS(){
-    cout<<" Regular: "<<precioRegularS;
     return precioRegularS;
 }
 int EstacionServicio::getPrecioEcoExtraN(){
-    cout<<" EcoExtra: "<<precioEcoExtraN;
     return precioEcoExtraN;
 }
 int EstacionServicio::getPrecioEcoExtraC(){
-    cout<<" EcoExtra: "<<precioEcoExtraC;
     return precioEcoExtraC;
 }
 int EstacionServicio::getPrecioEcoExtraS(){
-    cout<<" EcoExtra: "<<precioEcoExtraS;
     return precioEcoExtraS;
 }
 void EstacionServicio::setPrecioPremiumN(int precio){
@@ -405,6 +397,15 @@ void EstacionServicio::setPrecioEcoExtraC(int precio){
 }
 void EstacionServicio::setPrecioEcoExtraS(int precio){
     precioEcoExtraS = precio;
+}
+int EstacionServicio::getventasDelDiaPremimum(){
+    return ventasDelDia[0];
+}
+int EstacionServicio::getventasDelDiaRegular(){
+    return ventasDelDia[1];
+}
+int EstacionServicio::getventasDelDiaEcoExtra(){
+    return ventasDelDia[2];
 }
 void EstacionServicio::setNombre(string _nombre){
     nombre=_nombre;

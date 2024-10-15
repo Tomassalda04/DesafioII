@@ -278,3 +278,10 @@ void verficarOpcionModificar(redEstaciones& red, string& opc, char& opcion){
         }
     }
 }
+void mostrarEstacion(redEstaciones& red,string& opc){
+    for(unsigned int i= 0; i<red.getCantEstaciones(); i++){
+        if(red.getRedEstaciones()[i]->obtenerCodigo()==opc){
+            red.getRedEstaciones()[i]->mostrarSurtidores();
+        }
+    }
+}

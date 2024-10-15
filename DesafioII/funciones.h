@@ -17,4 +17,5 @@ void verificarCodigoExistente(redEstaciones& red,string& opc);
 bool verificarCodigoSurtidores(redEstaciones& red,string& opc);
 void opcionesPorModificar(redEstaciones& red,string& opc);
 void verficarOpcionModificar(redEstaciones& red, string& opc, char& opcion);
+void mostrarEstacion(redEstaciones& red,string& opc);
 #endif // FUNCIONES_H

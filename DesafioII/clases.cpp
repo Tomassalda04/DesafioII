@@ -90,6 +90,7 @@ void EstacionServicio::modificarSurtidores() {
                     surtidores -= cantidad;
                     if (surtidores < 2){
                         cout << "No se pueden tener menos de 2 surtidores, por lo tanto se actualizara al minimo posible. " << endl;
+                        surtidores =2;
                         cout << "Numero actualizado de surtidores: " << static_cast<int>(surtidores) << endl;
                         cout << "Numero actualizado de naves: " << static_cast<int>(EstacionServicio::obtenerNaves()) << endl;
                     }
@@ -425,3 +426,42 @@ void redEstaciones::getredEstaciones(){
         cout << "--------------------------------------" << endl;
     }
 }
+<<<<<<< Updated upstream
+=======
+int redEstaciones::getCantEstaciones(){
+    return cantEstaciones;
+}
+void redEstaciones::setNombreEstacion(string codigo,string _nombre){
+    for(unsigned int i=0;i<cantEstaciones;i++){
+        if(codigo==estaciones[i]->obtenerCodigo()){
+            estaciones[i]->setNombre(_nombre);
+        }
+    }
+}
+void redEstaciones::setCodigoEstacion(string codigo,string _codigo){
+    for(unsigned int i=0;i<cantEstaciones;i++){
+        if(codigo==estaciones[i]->obtenerCodigo()){
+            estaciones[i]->setCodigo(_codigo);
+        }
+    }
+}
+void redEstaciones::setGerenteEstacion(string codigo,string _gerente){
+    for(unsigned int i=0;i<cantEstaciones;i++){
+        if(codigo==estaciones[i]->obtenerCodigo()){
+            estaciones[i]->setGerente(_gerente);
+        }
+    }
+}
+void redEstaciones::modificarSurtidoresRed(string codigo){
+    for(unsigned int i=0;i<cantEstaciones;i++){
+        if(codigo==estaciones[i]->obtenerCodigo()){
+            estaciones[i]->modificarSurtidores();
+        }
+    }
+}
+
+//void redEstaciones::estadoSurtidores
+
+
+
+>>>>>>> Stashed changes

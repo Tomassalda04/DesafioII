@@ -165,6 +165,60 @@ int main() {
 
             }
             }
+<<<<<<< Updated upstream
+=======
+            break;
+        }
+         case '2': {
+            cout << "SELECCIONE LA OPCION QUE PREFIERA." << endl;
+            unsigned char opcionEstacionServicio;
+            cout << "1. AGREGAR/ELIMINAR UN SURTIDOR A UNA E/S." << endl;
+            cout << "2. ACTIVAR/DESACTIVAR UN SURTIDOR DE UNA E/S." << endl;
+            cout << "3. SIMULACION DE VENTAS DEL DIA." << endl;
+            cout << "4. VOLVER AL MENU PRINCIPAL." << endl;
+            cin >> opcionEstacionServicio;
+            switch (opcionEstacionServicio) {
+            case '1':{
+                cout << " ***AGREGAR O ELIMINAR SURTIDORES.***" << endl;
+                char confi='y';
+                while(confi != 'n' && confi != 'N'){
+                    string opcion;
+                    mostrarCodigos(red);
+                    cout<<"***ELIJA EL CODIGO DE LA ESTACION DE SERVICIO QUE DESEA MANIPULAR***: "<<endl;
+                    cin>>opcion;
+                    verificarCodigoExistente(red,opcion);
+                    red.modificarSurtidoresRed(opcion);
+                    cout << "DESEA AGREGAR O ELIMINAR SURTIDORES DE ESTACION? (y/n): " << endl;
+                    cin >> confi;
+                    verficarYoN(confi);
+                }
+                break;
+            }
+            /*case '2':{
+                cout << "***ACTIVAR/DESACTIVAR UN SURTIDOR DE UNA E/S***" << endl;
+                char confi='y';
+                while(confi != 'n' && confi != 'N'){
+                    string opcion;
+                    mostrarCodigos(red);
+                    cout<<"***ELIJA EL CODIGO DE LA ESTACION DE SERVICIO QUE DESEA MANIPULAR***: "<<endl;
+                    cin>>opcion;
+                    verificarCodigoExistente(red,opcion);
+                    red.modificarSurtidoresRed(opcion);
+                    cout << "DESEA ACTIVAR O DESACTIVAR SURTIDORES DE ESTACION? (y/n): " << endl;
+                    cin >> confi;
+                    verficarYoN(confi);
+                }
+                break;
+            }*/
+                break;
+            default:
+                break;
+            }
+
+
+            break;
+        }
+>>>>>>> Stashed changes
         }
     }
 }

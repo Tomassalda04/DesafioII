@@ -44,8 +44,20 @@ public:
     void agregarEstacion(EstacionServicio* newEstacion);
     void eliminarEstacion(string& cod);
     void fijarPrecioCombustible();
+<<<<<<< Updated upstream
     void getredEstaciones();
     string getCodigo(int index);
+=======
+    void precios();
+    void obtenerPrecios(string region, string codigo);
+    EstacionServicio** getRedEstaciones();
+    void mostrarRedEstaciones();
+    int getCantEstaciones();
+    void setNombreEstacion(string _codigo,string nombre);
+    void setCodigoEstacion(string _codigo,string codigo);
+    void setGerenteEstacion(string _codigo,string gerente);
+    void modificarSurtidoresRed(string _codigo);
+>>>>>>> Stashed changes
 };
 
 #endif // CLASES_H

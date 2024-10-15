@@ -11,6 +11,7 @@ private:
     int precioRegularN, precioPremiumN, precioEcoExtraN,precioRegularC, precioPremiumC, precioEcoExtraC,precioRegularS, precioPremiumS, precioEcoExtraS;
     unsigned char surtidores, naves;
     string* modeloSurtidor;
+    int ventasDelDia[3]{0,0,0};
     bool* estadoSurtidor;
 
 public:
@@ -27,7 +28,7 @@ public:
     void mostrarSurtidores();
     int contarSurtidoresActivos();
     bool surtidoresActivos();
-    int *simulacionVentas(int cantidadMaximaVenta);
+    void simulacionVentas(int cantidadMaximaVenta);
     string* obtenerModelosSurtidores();
     string obtenerNombre();
     string obtenerCodigo();
@@ -52,6 +53,9 @@ public:
     int getPrecioPremiumS();
     int getPrecioRegularS();
     int getPrecioEcoExtraS();
+    int getventasDelDiaPremimum();
+    int getventasDelDiaRegular();
+    int getventasDelDiaEcoExtra();
     void setNombre(string _nombre);
     void setCodigo(string _codigo);
     void setGerente(string _gerente);

@@ -285,3 +285,28 @@ void mostrarEstacion(redEstaciones& red,string& opc){
         }
     }
 }
+void calcularVentas(redEstaciones& red){
+    cout<<"CALCULANDO VENTAS..."<<endl;
+    int sumPremium=0,sumRegular=0,sumEco=0;
+    for(unsigned int i=0;i<red.getCantEstaciones();i++){
+        if(red.getRedEstaciones()[i]->obtenerRegion()=="NORTE"){
+            sumPremium+=((red.getRedEstaciones()[i]->getventasDelDiaPremimum())*(red.getRedEstaciones()[i]->getPrecioPremiumN()));
+            sumRegular+=((red.getRedEstaciones()[i]->getventasDelDiaRegular())*(red.getRedEstaciones()[i]->getPrecioRegularN()));
+            sumEco+=((red.getRedEstaciones()[i]->getventasDelDiaEcoExtra())*(red.getRedEstaciones()[i]->getPrecioEcoExtraN()));
+        }
+        else if(red.getRedEstaciones()[i]->obtenerRegion()=="CENTRO"){
+            sumPremium+=((red.getRedEstaciones()[i]->getventasDelDiaPremimum())*(red.getRedEstaciones()[i]->getPrecioPremiumC()));
+            sumRegular+=((red.getRedEstaciones()[i]->getventasDelDiaRegular())*(red.getRedEstaciones()[i]->getPrecioRegularC()));
+            sumEco+=((red.getRedEstaciones()[i]->getventasDelDiaEcoExtra())*(red.getRedEstaciones()[i]->getPrecioEcoExtraC()));
+        }
+        else{
+            sumPremium+=((red.getRedEstaciones()[i]->getventasDelDiaPremimum())*(red.getRedEstaciones()[i]->getPrecioPremiumS()));
+            sumRegular+=((red.getRedEstaciones()[i]->getventasDelDiaRegular())*(red.getRedEstaciones()[i]->getPrecioRegularS()));
+            sumEco+=((red.getRedEstaciones()[i]->getventasDelDiaEcoExtra())*(red.getRedEstaciones()[i]->getPrecioEcoExtraS()));
+        }
+    }
+    cout<<"TOTAL VENTAS PREMIUM :"<<sumPremium<<endl;
+    cout<<"TOTAL VENTAS REGULAR :"<<sumRegular<<endl;
+    cout<<"TOTAL VENTAS ECOEXTRA :"<<sumEco<<endl;
+
+}

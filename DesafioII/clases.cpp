@@ -237,25 +237,25 @@ int EstacionServicio::contarSurtidoresActivos() {
     return contador;
 }
 bool EstacionServicio::surtidoresActivos(){
-    if(surtidores>0){
+    if(contarSurtidoresActivos()>0){
         return true;
     }
-    else if(surtidores<=0){
+    else if(contarSurtidoresActivos()<=0){
         return false;
     }
 }
-void EstacionServicio::simulacionVentas(float cantidadMaximaVenta) {
+int *EstacionServicio::simulacionVentas(int cantidadMaximaVenta) {
     // Usamos el número de surtidores activos para determinar el número de ventas
     int numeroSurtidoresActivos = contarSurtidoresActivos();
     int numeroVentas = rand() % numeroSurtidoresActivos + (numeroSurtidoresActivos * 2);  // Ajusta la lógica
 
-    float cantidadVenta;
+    int cantidadVenta;
     string tipoCombustible;
 
     // Acumuladores para las ventas totales de cada tipo de gasolina
-    float totalRegularVendido = 0;
-    float totalPremiumVendido = 0;
-    float totalEcoExtraVendido = 0;
+    int totalRegularVendido = 0;
+    int totalPremiumVendido = 0;
+    int totalEcoExtraVendido = 0;
 
     cout << "Simulacion de ventas del dia:" << endl;
 
@@ -264,7 +264,7 @@ void EstacionServicio::simulacionVentas(float cantidadMaximaVenta) {
         int tipoAleatorio = rand() % 3;
 
         // Elegimos aleatoriamente la cantidad de venta (máximo hasta `cantidadMaximaVenta`)
-        cantidadVenta = static_cast<float>(rand() % static_cast<int>(cantidadMaximaVenta) + 1);
+        cantidadVenta = rand() % static_cast<int>(cantidadMaximaVenta) + 1;
 
         if (tipoAleatorio == 0) {
             tipoCombustible = "Regular";
@@ -290,7 +290,7 @@ void EstacionServicio::simulacionVentas(float cantidadMaximaVenta) {
             }
         } else if (obtenerCantidadCombustible(tipoCombustible) > 0) {
             // Si no hay suficiente para la venta completa, se vende lo que queda
-            float cantidadRestante = obtenerCantidadCombustible(tipoCombustible);
+            int cantidadRestante = obtenerCantidadCombustible(tipoCombustible);
             ventaCombustible(tipoCombustible, cantidadRestante);
             cout << "Se intentó vender " << cantidadVenta << " litros de " << tipoCombustible
                  << ", pero solo quedan " << cantidadRestante << " litros. Vendiendo el resto." << endl;
@@ -316,6 +316,8 @@ void EstacionServicio::simulacionVentas(float cantidadMaximaVenta) {
     cout << "Total vendido de EcoExtra: " << totalEcoExtraVendido << " litros." << endl;
 
     cout << "Fin de la simulacion del dia." << endl;
+    int ventasDelDia[3] = {totalPremiumVendido, totalRegularVendido, totalEcoExtraVendido};
+    return ventasDelDia;
 }
 
 string* EstacionServicio::obtenerModelosSurtidores() {
@@ -624,7 +626,47 @@ void redEstaciones::modificarSurtidoresRed(string codigo){
     }
 }
 
-//void redEstaciones::estadoSurtidores
+void redEstaciones::modificarEstadoRed(string codigo){
+    for(unsigned int i=0;i<cantEstaciones;i++){
+        if(codigo==estaciones[i]->obtenerCodigo()){
+            string modelo;
+            char activarOpcion;
+            bool activar;
+            cout << "Ingrese el modelo del surtidor (S, PMD, PHR): ";
+            cin >> modelo;
+
+            cout << "Desea activar (A) o desactivar (D) los surtidores de este modelo? ";
+            cin >> activarOpcion;
+
+            if (activarOpcion == 'A' || activarOpcion == 'a') {
+                activar = true;
+            } else if (activarOpcion == 'D' || activarOpcion == 'd') {
+                activar = false;
+            } else {
+                cout << "Opción no válida. Intente de nuevo." << endl;
+                continue; // Regresar al inicio del bucle
+            }
+            estaciones[i]->cambiarEstadoSurtidorPorModelo(modelo, activar);
+        }
+    }
+}
+
+void redEstaciones::simulacionVentasRed(string codigo){
+    for(unsigned int i=0;i<cantEstaciones;i++){
+        if(codigo==estaciones[i]->obtenerCodigo()){
+            int cantidadMaximaVenta;
+            cout << "Ingrese la cantidad máxima de venta por transacción (en litros): ";
+            cin >> cantidadMaximaVenta;
+            cout << "---------------------------------------------------------------------------" << endl;
+            estaciones[i]->simulacionVentas(cantidadMaximaVenta);
+        }
+    }
+}
+
+
+
+
+
 
 
 

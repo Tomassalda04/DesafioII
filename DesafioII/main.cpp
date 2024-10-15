@@ -208,10 +208,11 @@ int main() {
                     cout << "DESEA AGREGAR O ELIMINAR SURTIDORES DE ESTACION? (y/n): " << endl;
                     cin >> confi;
                     verficarYoN(confi);
+                    mostrarEstacion(red, opcion);
                 }
                 break;
             }
-            /*case '2':{
+            case '2':{
                 cout << "***ACTIVAR/DESACTIVAR UN SURTIDOR DE UNA E/S***" << endl;
                 char confi='y';
                 while(confi != 'n' && confi != 'N'){
@@ -220,14 +221,34 @@ int main() {
                     cout<<"***ELIJA EL CODIGO DE LA ESTACION DE SERVICIO QUE DESEA MANIPULAR***: "<<endl;
                     cin>>opcion;
                     verificarCodigoExistente(red,opcion);
-                    red.modificarSurtidoresRed(opcion);
+                    red.modificarEstadoRed(opcion);
                     cout << "DESEA ACTIVAR O DESACTIVAR SURTIDORES DE ESTACION? (y/n): " << endl;
                     cin >> confi;
                     verficarYoN(confi);
+                    mostrarEstacion(red, opcion);
                 }
                 break;
-            }*/
+            }
+            case '3':{
+                cout << "***ACTIVAR/DESACTIVAR UN SURTIDOR DE UNA E/S***" << endl;
+                char confi='y';
+                while(confi != 'n' && confi != 'N'){
+                    string opcion;
+                    mostrarCodigos(red);
+                    cout<<"***ELIJA EL CODIGO DE LA ESTACION DE SERVICIO QUE DESEA MANIPULAR***: "<<endl;
+                    cin>>opcion;
+                    verificarCodigoExistente(red,opcion);
+                    red.simulacionVentasRed(opcion);
+                    cout << "DESEA ACTIVAR O DESACTIVAR SURTIDORES DE ESTACION? (y/n): " << endl;
+                    cin >> confi;
+                    verficarYoN(confi);
+                    mostrarEstacion(red, opcion);
+                }
                 break;
+            }
+            case '4':{
+                break;
+            }
             default:
                 break;
             }

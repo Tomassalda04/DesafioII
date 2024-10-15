@@ -68,6 +68,8 @@ public:
     void agregarEstacion(EstacionServicio* nuevaEstacion);
     void eliminarEstacion(string& cod);
     void fijarPrecioCombustible();
+    void getredEstaciones();
+    string getCodigo(int index);
     void precios();
     void obtenerPrecios(string region, string codigo);
     EstacionServicio** getRedEstaciones();
@@ -76,6 +78,8 @@ public:
     void setNombreEstacion(string _codigo,string nombre);
     void setCodigoEstacion(string _codigo,string codigo);
     void setGerenteEstacion(string _codigo,string gerente);
+
+    void modificarSurtidoresRed(string _codigo);
 };
 
 #endif // CLASES_H

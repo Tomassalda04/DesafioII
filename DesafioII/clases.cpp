@@ -121,6 +121,7 @@ void EstacionServicio::modificarSurtidores() {
                     surtidores -= cantidad;
                     if (surtidores < 2){
                         cout << "No se pueden tener menos de 2 surtidores, por lo tanto se actualizara al minimo posible. " << endl;
+                        surtidores =2;
                         cout << "Numero actualizado de surtidores: " << static_cast<int>(surtidores) << endl;
                         cout << "Numero actualizado de naves: " << static_cast<int>(EstacionServicio::obtenerNaves()) << endl;
                     }
@@ -589,6 +590,7 @@ void redEstaciones::mostrarRedEstaciones(){
         cout << "--------------------------------------" << endl;
     }
 }
+
 int redEstaciones::getCantEstaciones(){
     return cantEstaciones;
 }
@@ -613,3 +615,16 @@ void redEstaciones::setGerenteEstacion(string codigo,string _gerente){
         }
     }
 }
+
+void redEstaciones::modificarSurtidoresRed(string codigo){
+    for(unsigned int i=0;i<cantEstaciones;i++){
+        if(codigo==estaciones[i]->obtenerCodigo()){
+            estaciones[i]->modificarSurtidores();
+        }
+    }
+}
+
+//void redEstaciones::estadoSurtidores
+
+
+

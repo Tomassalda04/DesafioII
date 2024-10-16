@@ -18,7 +18,6 @@ int main() {
     EstacionServicio* estacion = new EstacionServicio(nombre, codigo, gerente, region, gps, cont);
     EstacionServicio* estacion2 = new EstacionServicio(nombre2, codigo2, gerente2, region2, gps2, cont2);
     EstacionServicio* estacion3 = new EstacionServicio(nombre3, codigo3, gerente3, region3, gps3, cont3);
-    //estacion->modificarSurtidores();
     estacion->asignarModelosSurtidores();
     estacion2->asignarModelosSurtidores();
     estacion3->asignarModelosSurtidores();
@@ -251,7 +250,7 @@ int main() {
                 break;
             }
             case '3':{
-                cout << "***ACTIVAR/DESACTIVAR UN SURTIDOR DE UNA E/S***" << endl;
+                cout << "***SIMULACION DE VENTAS DE UNA E/S***" << endl;
                 char confi='y';
                 while(confi != 'n' && confi != 'N'){
                     string opcion;

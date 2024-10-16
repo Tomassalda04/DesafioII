@@ -6,11 +6,6 @@
 #include <ctime>
 using namespace std;
 
-#include <cstdlib>
-#include <ctime>
-
-#include <cstdlib>
-#include <ctime>
 
 EstacionServicio::EstacionServicio(const string& nombre, const string& codigo, const string& gerente, const string& region, string gps[3], int &cont) {
     this->nombre = nombre;
@@ -36,6 +31,7 @@ EstacionServicio::EstacionServicio(const string& nombre, const string& codigo, c
         modeloSurtidor[i] = "Modelo " + to_string(i + 1);
         estadoSurtidor[i] = true;
     }
+
     precioRegularN = 0.0f; // Asigna un precio inicial
     precioPremiumN = 0.0f; // Asigna un precio inicial
     precioEcoExtraN = 0.0f; // Asigna un precio inicial
@@ -83,22 +79,22 @@ void EstacionServicio::ventaCombustible(const string& tipo, float cantidad) {
 void EstacionServicio::modificarSurtidores() {
     char opcion;
     int cantidad;
-    int condicionFinalizacion = 0;
+    char condicionFinalizacion = '0';
 
-    while (condicionFinalizacion != 1){
-        int condicion = 0;
+    while (condicionFinalizacion != '1'){
+        char condicion = '0';
         cout << "Deseas modificar los surtidores? (S para si, N para no): ";
         cin >> opcion;
 
         if (opcion == 'S' || opcion == 's') {
             cout << "El numero actual de surtidores es: " << static_cast<int>(surtidores) << endl;
 
-            while (condicion != 1){
+            while (condicion != '1'){
                 cout << "Deseas agregar (A) o quitar (Q) surtidores? ";
                 cin >> opcion;
 
                 if (opcion == 'A' || opcion == 'a') {
-                    condicion = 1;
+                    condicion = '1';
                     cout << "Cuantos surtidores deseas agregar? ";
                     cin >> cantidad;
                     surtidores += cantidad;
@@ -136,7 +132,7 @@ void EstacionServicio::modificarSurtidores() {
         }
         else {
             cout << "No se realizara ninguna modificacion." << endl;
-            condicionFinalizacion = 1;
+            condicionFinalizacion = '1';
         }
     }
 }
@@ -154,24 +150,24 @@ void EstacionServicio::asignarModelosSurtidores() {
     string modelos[3] = {"S", "PMD", "PHR"};
 
     modeloSurtidor = new string[surtidores];
-    for (int i = 0; i < surtidores; i++) {
-        int modeloAleatorio = rand() % 3;
+    for (unsigned int i = 0; i < static_cast<unsigned int>(surtidores); i++) {
+        unsigned int modeloAleatorio = rand() % 3;
         modeloSurtidor[i] = modelos[modeloAleatorio];
     }
 
     cout << "Modelos asignados a cada surtidor:" << endl;
-    for (int i = 0; i < surtidores; i++) {
+    for (unsigned int i = 0; i < static_cast<unsigned int>(surtidores); i++) {
         cout << "Surtidor " << (i + 1) << ": " << modeloSurtidor[i] << endl;
     }
 }
 void EstacionServicio::asignarEstadoSurtidores() {
     estadoSurtidor = new bool[surtidores];
-    for (int i = 0; i < surtidores; i++) {
+    for (unsigned int i = 0; i < static_cast<unsigned int>(surtidores); i++) {
         estadoSurtidor[i] = true;
     }
 
     cout << "Estado inicial asignado a cada surtidor (todos activados):" << endl;
-    for (int i = 0; i < surtidores; i++) {
+    for (unsigned int i = 0; i < static_cast<unsigned int>(surtidores); i++) {
         cout << "Surtidor " << (i + 1) << " esta activado." << endl;
     }
 }
@@ -179,7 +175,7 @@ void EstacionServicio::asignarEstadoSurtidores() {
 void EstacionServicio::cambiarEstadoSurtidorPorModelo(const string& modelo, bool activar) {
     int contadorModelo = 0;
 
-    for (int i = 0; i < surtidores; i++) {
+    for (unsigned int i = 0; i < static_cast<unsigned int>(surtidores); i++) {
         if (modeloSurtidor[i] == modelo) {
             contadorModelo++;
         }
@@ -220,7 +216,7 @@ void EstacionServicio::mostrarSurtidores() {
 }
 
 int EstacionServicio::contarSurtidoresActivos() {
-    int contador = 0;
+    unsigned int contador = 0;
     for (int i = 0; i < surtidores; i++) {
         if (estadoSurtidor[i]) {
             contador++;
@@ -315,7 +311,7 @@ void EstacionServicio::simulacionVentas(int cantidadMaximaVenta) {
     ventasDelDia[1]=totalRegularVendido;
     ventasDelDia[2]=totalEcoExtraVendido;
 }
-void EstacionServicio::simularVentaUnica() {
+void EstacionServicio::simulacionVentas() {
     if (contarSurtidoresActivos() == 0) {
         cout << "No hay surtidores activos para realizar una venta." << endl;
         return;
@@ -331,7 +327,7 @@ void EstacionServicio::simularVentaUnica() {
 
     int cantidadVenta = rand() % 18 + 3;
 
-    string metodosPago[3] = {"Efectivo", "Tarjeta de Crédito", "Tarjeta de Débito"};
+    string metodosPago[3] = {"Efectivo", "Tarjeta de Credito", "Tarjeta de Debito"};
     string metodoPago = metodosPago[rand() % 3];
     int cedula = rand() % 90000000 + 10000000;
 
@@ -688,7 +684,7 @@ void redEstaciones::modificarEstadoRed(string codigo){
 void redEstaciones::simulacionVentasEstacion(string codigo){
     for(unsigned int i=0;i<cantEstaciones;i++){
         if(codigo==estaciones[i]->obtenerCodigo()){
-            int cantidadMaximaVenta;
+            unsigned int cantidadMaximaVenta;
             cout << "Ingrese la cantidad maxima de venta por transaccion (en litros): ";
             cin >> cantidadMaximaVenta;
             cout << "---------------------------------------------------------------------------" << endl;
@@ -699,8 +695,7 @@ void redEstaciones::simulacionVentasEstacion(string codigo){
 void redEstaciones::simulacionVentasSurtidorRed(string codigo){
     for(unsigned int i=0;i<cantEstaciones;i++){
         if(codigo==estaciones[i]->obtenerCodigo()){
-            int cantidadMaximaVenta;
-            estaciones[i]->simularVentaUnica();
+            estaciones[i]->simulacionVentas();
         }
     }
 }

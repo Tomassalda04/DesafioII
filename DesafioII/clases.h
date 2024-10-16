@@ -9,9 +9,9 @@
         string gps[3];
         int regular, premium, ecoExtra;
         int precioRegularN, precioPremiumN, precioEcoExtraN,precioRegularC, precioPremiumC, precioEcoExtraC,precioRegularS, precioPremiumS, precioEcoExtraS;
-        unsigned char surtidores, naves;
+        char surtidores, naves;
         string* modeloSurtidor;
-        int ventasDelDia[3]{0,0,0};
+        unsigned int ventasDelDia[3]{0,0,0};
         bool* estadoSurtidor;
         string tipoPago;
 
@@ -31,7 +31,7 @@
         int contarSurtidoresActivos();
         bool surtidoresActivos();
         void simulacionVentas(int cantidadMaximaVenta);
-        void simularVentaUnica();
+        void simulacionVentas();
         string* obtenerModelosSurtidores();
         string obtenerNombre();
         string obtenerCodigo();

@@ -158,6 +158,24 @@ void verificarPrecioCombustible(string& precio){
         }
     }
 }
+void verificarLitros(string& litros){
+    while(true){
+        unsigned char aux=0;
+        for(int i=0;i<litros.length();i++){
+            char temp= litros[i];
+            if(temp<'0' || temp>'9'){
+                aux=1;
+            }
+        }
+        if(aux==1){
+            cout<<"    *****ERROR*****"<<endl<<"----------Entrada invalida----------"<<endl<< "Ingrese un numero correcto para el precio:"<<endl;
+            cin>>litros;
+        }
+        else{
+            break;
+        }
+    }
+}
 void verficarYoN(char &opcion){
     while(true){
         if(opcion!='y'&& opcion!='Y'&&opcion!='n'&&opcion!='N'){
@@ -171,16 +189,18 @@ void verficarYoN(char &opcion){
 }
 void verficarOpcion(unsigned char& opc){
     while(true){
-        if(opc<'1'||opc>'6'){
+        if(opc<'1'||opc>'9'){
             cout<<"           *ERRROR*"<<endl<<"----------Entrada invalida----------"<<endl;
             cout<<"*****GESTION DE LA RED*****"<<endl;
             cout <<" ELIJA LA OPCION DE SU PREFERENCIA" << endl;
             cout <<"1. AGREGAR ESTACION DE SERVICIO." << endl;
             cout <<"2. ELIMINAR ESTACION DE SERVICIO." << endl;
-            cout <<"3. CALCULAR EL MONTO TOTAL DE VENTAS." << endl;
-            cout <<"4. MODIFICAR ESTACIONES." << endl;
-            cout <<"5. MOSTRAR ESTACIONES" << endl;
-            cout <<"6. SALIR AL MENU PRINCIPAL" <<endl;
+            cout <<"3. SIMULAR VENTAS RED." << endl;
+            cout <<"4. CALCULAR EL MONTO TOTAL DE VENTAS." << endl;
+            cout <<"5. FIJAR PRECIOS COMBUSTBLE." << endl;
+            cout <<"6. MODIFICAR ESTACIONES." << endl;
+            cout <<"7. MOSTRAR ESTACIONES" << endl;
+            cout <<"8. SALIR AL MENU PRINCIPAL" <<endl;
             cin>>opc;
         }
         else{
@@ -284,29 +304,4 @@ void mostrarEstacion(redEstaciones& red,string& opc){
             red.getRedEstaciones()[i]->mostrarSurtidores();
         }
     }
-}
-void calcularVentas(redEstaciones& red){
-    cout<<"CALCULANDO VENTAS..."<<endl;
-    int sumPremium=0,sumRegular=0,sumEco=0;
-    for(unsigned int i=0;i<red.getCantEstaciones();i++){
-        if(red.getRedEstaciones()[i]->obtenerRegion()=="NORTE"){
-            sumPremium+=((red.getRedEstaciones()[i]->getventasDelDiaPremimum())*(red.getRedEstaciones()[i]->getPrecioPremiumN()));
-            sumRegular+=((red.getRedEstaciones()[i]->getventasDelDiaRegular())*(red.getRedEstaciones()[i]->getPrecioRegularN()));
-            sumEco+=((red.getRedEstaciones()[i]->getventasDelDiaEcoExtra())*(red.getRedEstaciones()[i]->getPrecioEcoExtraN()));
-        }
-        else if(red.getRedEstaciones()[i]->obtenerRegion()=="CENTRO"){
-            sumPremium+=((red.getRedEstaciones()[i]->getventasDelDiaPremimum())*(red.getRedEstaciones()[i]->getPrecioPremiumC()));
-            sumRegular+=((red.getRedEstaciones()[i]->getventasDelDiaRegular())*(red.getRedEstaciones()[i]->getPrecioRegularC()));
-            sumEco+=((red.getRedEstaciones()[i]->getventasDelDiaEcoExtra())*(red.getRedEstaciones()[i]->getPrecioEcoExtraC()));
-        }
-        else{
-            sumPremium+=((red.getRedEstaciones()[i]->getventasDelDiaPremimum())*(red.getRedEstaciones()[i]->getPrecioPremiumS()));
-            sumRegular+=((red.getRedEstaciones()[i]->getventasDelDiaRegular())*(red.getRedEstaciones()[i]->getPrecioRegularS()));
-            sumEco+=((red.getRedEstaciones()[i]->getventasDelDiaEcoExtra())*(red.getRedEstaciones()[i]->getPrecioEcoExtraS()));
-        }
-    }
-    cout<<"TOTAL VENTAS PREMIUM :"<<sumPremium<<endl;
-    cout<<"TOTAL VENTAS REGULAR :"<<sumRegular<<endl;
-    cout<<"TOTAL VENTAS ECOEXTRA :"<<sumEco<<endl;
-
 }

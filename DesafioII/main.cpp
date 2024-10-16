@@ -34,6 +34,7 @@ int main() {
     cout<<"     *****FIJAR PRECIOS COMBUSTIBLES*****"<<endl;
     red.fijarPrecioCombustible();
     red.precios();
+    unsigned int dia=0;
     while(condicionInicial !=1){
         cout<<endl<<endl<<endl;
         cout<<"*****MENU PRINCIPAL*****"<<endl;
@@ -51,10 +52,12 @@ int main() {
             cout <<" ELIJA LA OPCION DE SU PREFERENCIA" << endl;
             cout <<"1. AGREGAR ESTACION DE SERVICIO." << endl;
             cout <<"2. ELIMINAR ESTACION DE SERVICIO." << endl;
-            cout <<"3. CALCULAR EL MONTO TOTAL DE VENTAS." << endl;
-            cout <<"4. MODIFICAR ESTACIONES." << endl;
-            cout <<"5. MOSTRAR ESTACIONES" << endl;
-            cout <<"6. SALIR AL MENU PRINCIPAL" <<endl;
+            cout <<"3. SIMULAR VENTAS RED." << endl;
+            cout <<"4. CALCULAR EL MONTO TOTAL DE VENTAS." << endl;
+            cout <<"5. FIJAR PRECIOS COMBUSTBLE." << endl;
+            cout <<"6. MODIFICAR ESTACIONES." << endl;
+            cout <<"7. MOSTRAR ESTACIONES" << endl;
+            cout <<"8. SALIR AL MENU PRINCIPAL" <<endl;
             cin>>opcion;
             verficarOpcion(opcion);
             switch(opcion){
@@ -105,6 +108,10 @@ int main() {
                 cout << "   ***ELIMINAR ESTACION DE SERVICIO.***" << endl;
                 char confi='y';
                 while(confi != 'n' && confi != 'N'){
+                    if(red.getCantEstaciones()==0){
+                        cout<<"NO HAY ESTACIONES DISPONIBLES:"<<endl<<"SALIENDO AL MENU PRINCIPAL..."<<endl<<endl;
+                        break;
+                    }
                     bool continuar;
                     string opcion;
                     mostrarCodigos(red);
@@ -124,15 +131,32 @@ int main() {
                 break;
             }
             case '3':{
+                cout << "***SIMULAR LAS VENTAS DE LAS ESTACIONES DE SERVICIO.***" << endl;
+                cout <<"---------------------DIA: "<<dia<<"----------------------<<"<<endl;
+                red.simulacionVentasRed();
+                dia++;
+                break;
+            }
+            case '4':{
                 cout << "***CALCULAR MONTO TOTAL DE LAS VENTAS DE LAS ESTACIONES DE SERVICIO.***" << endl;
-                calcularVentas(red);
+                red.mostrarHistorialVentasRed();
                 break;
 
             }
-            case '4':{
+            case '5':{
+                cout<<"     *****FIJAR PRECIOS COMBUSTIBLES*****"<<endl;
+                red.fijarPrecioCombustible();
+                red.precios();
+                break;
+            }
+            case '6':{
                 cout << "    ***MODIFICAR ESTACION DE SERVICIO.***" << endl;
                 char confi='y';
                 while(confi != 'n' && confi != 'N'){
+                    if(red.getCantEstaciones()==0){
+                        cout<<"NO HAY ESTACIONES DISPONIBLES:"<<endl<<"SALIENDO AL MENU PRINCIPAL..."<<endl<<endl;
+                        break;
+                    }
                     char opcion;
                     string opc;
                     mostrarCodigos(red);
@@ -166,16 +190,24 @@ int main() {
                     verficarYoN(confi);
                 }
                 break;
+                }
+            case '7':{
+                if(red.getCantEstaciones()==0){
+                    cout<<"NO HAY ESTACIONES DISPONIBLES:"<<endl<<"SALIENDO AL MENU PRINCIPAL..."<<endl<<endl;
+                    break;
+                }
+                else{
+                    red.mostrarRedEstaciones();
+                    break;
+                }
             }
-            case '5':{
-
-                red.mostrarRedEstaciones();
-                break;
+            case '8':{
+                cout<<"SALIENDO AL MENU PRINCIPAL...."<<endl<<endl;
             }
             }
             break;
         }
-         case '2': {
+        case '2': {
             cout << "SELECCIONE LA OPCION QUE PREFIERA." << endl;
             unsigned char opcionEstacionServicio;
             cout << "1. AGREGAR/ELIMINAR UN SURTIDOR A UNA E/S." << endl;
@@ -227,7 +259,7 @@ int main() {
                     cout<<"***ELIJA EL CODIGO DE LA ESTACION DE SERVICIO QUE DESEA MANIPULAR***: "<<endl;
                     cin>>opcion;
                     verificarCodigoExistente(red,opcion);
-                    red.simulacionVentasRed(opcion);
+                    red.simulacionVentasEstacion(opcion);
                     cout << "NO SE PUEDE HACER OTRA SIMULACION DE LA ESTACION EN EL MISMO DIA: " << endl;
                     confi = 'n';
                     verficarYoN(confi);

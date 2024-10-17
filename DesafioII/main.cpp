@@ -131,16 +131,16 @@ int main() {
             }
             case '3':{
                 cout << "***SIMULAR LAS VENTAS DE LAS ESTACIONES DE SERVICIO.***" << endl;
-                cout <<"---------------------DIA: "<<dia<<"----------------------<<"<<endl;
+                cout <<"---------------------DIA: "<<dia+1<<"----------------------<<"<<endl;
                 red.simulacionVentasRed();
                 dia++;
                 break;
             }
             case '4':{
                 cout << "***CALCULAR MONTO TOTAL DE LAS VENTAS DE LAS ESTACIONES DE SERVICIO.***" << endl;
-                red.mostrarHistorialVentasRed();
+                cout<<"CALCULANDO..."<<endl;
+                cout<<"PREMIUM: "<<red.getVentasPremiumT()<<" DOLARES. REGULAR: "<<red.getVentasRegularT()<<" DOLARES. ECOEXTRA: "<<red.getVentasEcoExtraT()<<" DOLARES."<<endl;
                 break;
-
             }
             case '5':{
                 cout<<"     *****FIJAR PRECIOS COMBUSTIBLES*****"<<endl;
@@ -202,6 +202,7 @@ int main() {
             }
             case '8':{
                 cout<<"SALIENDO AL MENU PRINCIPAL...."<<endl<<endl;
+                break;
             }
             }
             break;
@@ -267,36 +268,49 @@ int main() {
                 break;
             }
             case '4':{
+                cout<<"SALIENDO AL MENU PRINCIPAL...."<<endl<<endl;
                 break;
             }
             default:
                 break;
             }
-
-
             break;
         }
-         case '3':{
+        case '3':{
+            cout << "***SISTEMA NACIONAL DE VERIFICACION DE FUGAS***" << endl;
+            if(red.getCantVentas()==0){
+                cout<<"NO HAY SIMULACIONES DISPONIBLES EN LA RED:"<<endl<<"SALIENDO AL MENU PRINCIPAL..."<<endl<<endl;
+                break;
+            }
+            cout<<"VERIFICANDO FUGAS..."<<endl;
+            //verificacionFugas(red);
             break;
-         }
-         case '4':{
-             cout << "***SIMULACION DE VENTAS DE SURTIDOR***" << endl;
-             char confi='y';
-             while(confi != 'n' && confi != 'N'){
-                 string opcion;
-                 mostrarCodigos(red);
-                 cout<<"***ELIJA EL CODIGO DE LA ESTACION DE SERVICIO QUE DESEA MANIPULAR***: "<<endl;
-                 cin>>opcion;
-                 verificarCodigoExistente(red,opcion);
-                 red.simulacionVentasSurtidorRed(opcion);
-                 cout << "DESEA VOLVER A SIMULAR? (y/n): " << endl;
-                 cin >> confi;
-                 verficarYoN(confi);
-                 mostrarEstacion(red, opcion);
+        }
+        case '4':{
+            cout << "***SIMULACION DE VENTAS DE SURTIDOR***" << endl;
+            char confi='y';
+            while(confi != 'n' && confi != 'N'){
+                string opcion;
+                mostrarCodigos(red);
+                cout<<"***ELIJA EL CODIGO DE LA ESTACION DE SERVICIO QUE DESEA MANIPULAR***: "<<endl;
+                cin>>opcion;
+                verificarCodigoExistente(red,opcion);
+                red.simulacionVentasSurtidorRed(opcion);
+                cout << "DESEA VOLVER A SIMULAR? (y/n): " << endl;
+                cin >> confi;
+                verficarYoN(confi);
+                mostrarEstacion(red, opcion);
              }
              break;
-         }
-
+        }
+        case '5':{
+            cout<<"SALIENDO DEL PROGRAMA..."<<endl;
+            cout<<"VUELVA PRONTO."<<endl;
+            cout<<"-----------------------------------------------"<<endl;
+            cout<<"|              COMPANIA TERMEX                |"<<endl;
+            cout<<"-----------------------------------------------"<<endl;
+            return 0;
+        }
         }
     }
     return 0;

@@ -235,11 +235,9 @@ bool EstacionServicio::surtidoresActivos(){
 void EstacionServicio::simulacionVentas(int cantidadMaximaVenta) {
     int numeroSurtidoresActivos = contarSurtidoresActivos();
     int numeroVentas = rand() % numeroSurtidoresActivos + (numeroSurtidoresActivos * 2);
-
     int cantidadVenta;
     string tipoCombustible;
     string tipoPago;
-
     int totalRegularVendido = 0;
     int totalPremiumVendido = 0;
     int totalEcoExtraVendido = 0;
@@ -307,9 +305,9 @@ void EstacionServicio::simulacionVentas(int cantidadMaximaVenta) {
     cout << "Total vendido de EcoExtra: " << totalEcoExtraVendido << " litros." << endl;
 
     cout << "Fin de la simulacion del dia." << endl;
-    ventasDelDia[0]=totalPremiumVendido;
-    ventasDelDia[1]=totalRegularVendido;
-    ventasDelDia[2]=totalEcoExtraVendido;
+    ventaDiaPremium=totalPremiumVendido;
+    ventaDiaRegular=totalRegularVendido;
+    ventaDiaEcoExtra=totalEcoExtraVendido;
 }
 void EstacionServicio::simulacionVentas() {
     if (contarSurtidoresActivos() == 0) {
@@ -425,14 +423,14 @@ void EstacionServicio::setPrecioEcoExtraC(int precio){
 void EstacionServicio::setPrecioEcoExtraS(int precio){
     precioEcoExtraS = precio;
 }
-int EstacionServicio::getventasDelDiaPremimum(){
-    return ventasDelDia[0];
+int EstacionServicio::getVentaDiaPremium(){
+    return ventaDiaPremium;
 }
-int EstacionServicio::getventasDelDiaRegular(){
-    return ventasDelDia[1];
+int EstacionServicio::getVentaDiaRegular(){
+    return ventaDiaRegular;
 }
-int EstacionServicio::getventasDelDiaEcoExtra(){
-    return ventasDelDia[2];
+int EstacionServicio::getVentaDiaEcoExtra(){
+    return ventaDiaEcoExtra;
 }
 void EstacionServicio::setNombre(string _nombre){
     nombre=_nombre;
@@ -447,7 +445,6 @@ void EstacionServicio::setGerente(string _gerente){
 redEstaciones::redEstaciones() {
     cantEstaciones=0;
     cantVentas=0;
-    historialVentasRed = nullptr;
     estaciones = nullptr;
 }
 
@@ -705,66 +702,45 @@ void redEstaciones::simulacionVentasRed(){
         cout<<"SIMULACION NO INICIADA..."<<endl<<"NO HAY ESTACIONES DISPONIBLES.";
         return;
     }
-    int** tempVentas = new int*[cantVentas + cantVentas];
-    for (unsigned int i = 0; i < cantVentas; i++) {
-        tempVentas[i] = new int[3];
-        for (int j = 0; j < 3; ++j) {
-            tempVentas[i][j] = historialVentasRed[i][j];
-        }
-    }
     for (unsigned int i = 0; i < cantEstaciones; i++) {
         string cantidadMaximaVenta;
         cout<<endl<<endl;
         cout <<"ESTACION: "<<estaciones[i]->obtenerNombre()<<endl;
-        cout << "Ingrese la cantidad maxima de venta por transacción (en litros): ";
+        cout << "Ingrese la cantidad maxima de venta por transaccion (en litros): ";
         cin >> cantidadMaximaVenta;
         verificarLitros(cantidadMaximaVenta);
         cout << "---------------------------------------------------------------------------" << endl;
         estaciones[i]->simulacionVentas(stoi(cantidadMaximaVenta));
-        tempVentas[cantVentas] = new int[3];
         if(estaciones[i]->obtenerRegion()=="NORTE"){
-            tempVentas[cantVentas][0] = (estaciones[i]->getventasDelDiaPremimum())*estaciones[i]->getPrecioPremiumN();
-            tempVentas[cantVentas][1] = (estaciones[i]->getventasDelDiaRegular())*estaciones[i]->getPrecioRegularN();
-            tempVentas[cantVentas][2] = (estaciones[i]->getventasDelDiaEcoExtra())*estaciones[i]->getPrecioEcoExtraN();
+            ventasPremiumT+=(estaciones[i]->getVentaDiaPremium())*estaciones[i]->getPrecioPremiumN();
+            ventasRegularT+=(estaciones[i]->getVentaDiaRegular())*estaciones[i]->getPrecioRegularN();
+            ventasEcoExtraT+=(estaciones[i]->getVentaDiaEcoExtra())*estaciones[i]->getPrecioEcoExtraN();
         }
         else if(estaciones[i]->obtenerRegion()=="CENTRO"){
-            tempVentas[cantVentas][0] = (estaciones[i]->getventasDelDiaPremimum())*estaciones[i]->getPrecioPremiumC();
-            tempVentas[cantVentas][1] = (estaciones[i]->getventasDelDiaRegular())*estaciones[i]->getPrecioRegularC();
-            tempVentas[cantVentas][2] = (estaciones[i]->getventasDelDiaEcoExtra())*estaciones[i]->getPrecioEcoExtraC();
+            ventasPremiumT+=(estaciones[i]->getVentaDiaPremium())*estaciones[i]->getPrecioPremiumC();
+            ventasRegularT+= (estaciones[i]->getVentaDiaRegular())*estaciones[i]->getPrecioRegularC();
+            ventasEcoExtraT+=(estaciones[i]->getVentaDiaEcoExtra())*estaciones[i]->getPrecioEcoExtraC();
         }
         else{
-            tempVentas[cantVentas][0] = (estaciones[i]->getventasDelDiaPremimum())*estaciones[i]->getPrecioPremiumS();
-            tempVentas[cantVentas][1] = (estaciones[i]->getventasDelDiaRegular())*estaciones[i]->getPrecioRegularS();
-            tempVentas[cantVentas][2] = (estaciones[i]->getventasDelDiaEcoExtra())*estaciones[i]->getPrecioEcoExtraS();
+            ventasPremiumT+=(estaciones[i]->getVentaDiaPremium())*estaciones[i]->getPrecioPremiumS();
+            ventasRegularT+= (estaciones[i]->getVentaDiaRegular())*estaciones[i]->getPrecioRegularS();
+            ventasEcoExtraT+=(estaciones[i]->getVentaDiaEcoExtra())*estaciones[i]->getPrecioEcoExtraS();
         }
+
         cantVentas++;
         estaciones[i]->setCantidadCombustible(rand() % 101 + 100,rand() % 101 + 100,rand() % 101 + 100);
     }
-    if (historialVentasRed != nullptr) {
-        for (unsigned int i = 0; i < cantVentas - cantEstaciones; i++) {
-            delete[] historialVentasRed[i];
-        }
-        delete[] historialVentasRed;
-    }
-    cout<<"CANTIDAD VENTAS TOTAL: "<<cantVentas<<endl<<endl;
-    historialVentasRed = tempVentas;
-}
-void redEstaciones::mostrarHistorialVentasRed(){
-    cout << "Historial de Ventas de la Red de Estaciones:" << endl;
-    cout<<"CALCULANDO VENTAS..."<<endl;
-    int sumPremium=0,sumRegular=0,sumEco=0;
-    int Dia=1;
-    if(cantVentas==0){
-        cout<<"NO HAY VENTAS DISPONIBLES."<<endl;
-        return;
-    }
-    else{
-        for(unsigned int i=0;i<cantVentas;i++){
-            sumPremium+=historialVentasRed[i][0];
-            sumRegular+=historialVentasRed[i][1];
-            sumEco+=historialVentasRed[i][2];
-        }
-    }
-    cout<<"PREMIUM: "<<sumPremium<<" REGULAR: "<<sumRegular<<" ECOEXTRA: "<<sumEco<<endl;
-}
 
+}
+int redEstaciones::getCantVentas(){
+    return cantVentas;
+}
+int redEstaciones::getVentasPremiumT(){
+    return ventasPremiumT;
+}
+int redEstaciones::getVentasRegularT(){
+    return ventasRegularT;
+}
+int redEstaciones::getVentasEcoExtraT(){
+    return ventasEcoExtraT;
+}

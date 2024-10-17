@@ -11,7 +11,7 @@
         int precioRegularN, precioPremiumN, precioEcoExtraN,precioRegularC, precioPremiumC, precioEcoExtraC,precioRegularS, precioPremiumS, precioEcoExtraS;
         char surtidores, naves;
         string* modeloSurtidor;
-        unsigned int ventasDelDia[3]{0,0,0};
+        int ventaDiaPremium,ventaDiaRegular,ventaDiaEcoExtra;
         bool* estadoSurtidor;
         string tipoPago;
 
@@ -56,9 +56,9 @@
         int getPrecioPremiumS();
         int getPrecioRegularS();
         int getPrecioEcoExtraS();
-        int getventasDelDiaPremimum();
-        int getventasDelDiaRegular();
-        int getventasDelDiaEcoExtra();
+        int getVentaDiaPremium();
+        int getVentaDiaRegular();
+        int getVentaDiaEcoExtra();
         void setNombre(string _nombre);
         void setCodigo(string _codigo);
         void setGerente(string _gerente);
@@ -67,7 +67,7 @@
     class redEstaciones {
     private:
         EstacionServicio** estaciones;
-        int** historialVentasRed;
+        int ventasPremiumT=0,ventasRegularT=0,ventasEcoExtraT=0;
         string fijarPrecio[3][3];
         int cantEstaciones,cantVentas;
 
@@ -91,9 +91,10 @@
         void simulacionVentasEstacion(string codigo);
         void simulacionVentasRed();
         void simulacionVentasSurtidorRed(string codigo);
-        void mostrarHistorialVentasRed();
-        int** getHistorialVentasRed() ;
-        void calcularVentas(unsigned int dia);
+        int getCantVentas();
+        int getVentasPremiumT();
+        int getVentasRegularT();
+        int getVentasEcoExtraT();
     };
 
     #endif // CLASES_H

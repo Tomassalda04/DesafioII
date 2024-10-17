@@ -305,3 +305,21 @@ void mostrarEstacion(redEstaciones& red,string& opc){
         }
     }
 }
+
+int obtenerOpcionMenu(unsigned char numeroDeOpciones) {
+    unsigned char opcion;
+
+    while (true) {
+        cout << "Ingrese su opcion: ";
+        cin >> opcion;
+
+        if (opcion >='1' && opcion <= numeroDeOpciones) {
+            return opcion;
+        }
+        else {
+            cout <<"              *****ERROR*****" << endl;
+            cout << "Entrada invalida. Por favor, ingrese un numero entre 1 y " << numeroDeOpciones
+                 << "." << endl;
+        }
+    }
+}

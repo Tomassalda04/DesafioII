@@ -241,6 +241,9 @@ void EstacionServicio::simulacionVentas(int cantidadMaximaVenta) {
     int totalRegularVendido = 0;
     int totalPremiumVendido = 0;
     int totalEcoExtraVendido = 0;
+    regularInicial =regular;
+    premiumInicial = premium;
+    ecoExtraInicial = ecoExtra;
 
     cout << "Simulacion de ventas del dia:" << endl;
 
@@ -308,6 +311,9 @@ void EstacionServicio::simulacionVentas(int cantidadMaximaVenta) {
     ventaDiaPremium=totalPremiumVendido;
     ventaDiaRegular=totalRegularVendido;
     ventaDiaEcoExtra=totalEcoExtraVendido;
+    PremiumVendido =totalPremiumVendido;
+    RegularVendido = totalRegularVendido;
+    EcoVendido = totalEcoExtraVendido;
 }
 void EstacionServicio::simulacionVentas() {
     if (contarSurtidoresActivos() == 0) {
@@ -342,6 +348,41 @@ void EstacionServicio::simulacionVentas() {
     } else {
         cout << "No hay suficiente " << tipoCombustible << " para completar la venta." << endl;
     }
+}
+
+void EstacionServicio::verificacionDeFugas(){
+    CantSobrantePremium = premiumInicial-PremiumVendido;
+    CantSobranteRegular = regularInicial-RegularVendido;
+    CantSobranteEco = ecoExtraInicial-EcoVendido;
+    unsigned int totalCombustibleVendido = PremiumVendido+RegularVendido + EcoVendido;
+    unsigned int totalCombustibleInicial = regularInicial + premiumInicial + ecoExtraInicial;
+    unsigned int totalCombustibleSobrante = CantSobrantePremium + CantSobranteRegular+ CantSobranteEco;
+
+
+    if((totalCombustibleVendido+totalCombustibleSobrante)>=(0.95*totalCombustibleInicial)){
+        if((PremiumVendido+CantSobrantePremium)>=(0.95*premiumInicial)){
+            cout << "No hay fugas en el combustible de tipo Premium" << endl;
+        }
+        else {
+            cout << " Error PREMIUM" <<endl;
+        }
+        if ((RegularVendido+CantSobranteRegular)>=(0.95*regularInicial)){
+            cout << "No hay fugas en el combustible de tipo Regular" << endl;
+        }
+        else {
+            cout << " Erro REGULAR" <<endl;
+        }
+        if ((EcoVendido+CantSobranteEco)>=(0.95*ecoExtraInicial)){
+            cout << "No hay fugas en el combustible de tipo EcoExtra" << endl;
+        }
+        else {
+            cout << " Error ECO" <<endl;
+        }
+    }
+    else {
+        cout << " Error" <<endl;
+    }
+
 }
 
 
@@ -693,6 +734,14 @@ void redEstaciones::simulacionVentasSurtidorRed(string codigo){
     for(unsigned int i=0;i<cantEstaciones;i++){
         if(codigo==estaciones[i]->obtenerCodigo()){
             estaciones[i]->simulacionVentas();
+        }
+    }
+}
+
+void redEstaciones::verificacionDeFugas(string codigo){
+    for(unsigned int i=0;i<cantEstaciones;i++){
+        if(codigo==estaciones[i]->obtenerCodigo()){
+            estaciones[i]->verificacionDeFugas();
         }
     }
 }

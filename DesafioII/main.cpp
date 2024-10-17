@@ -309,6 +309,10 @@ int main() {
              break;
         }
         case '5':{
+            for(unsigned int i=0; i<red.getCantEstaciones();i++){
+                red.getRedEstaciones()[i]->~EstacionServicio();
+            }
+            red.~redEstaciones();
             cout<<"SALIENDO DEL PROGRAMA..."<<endl;
             cout<<"VUELVA PRONTO."<<endl;
             cout<<"-----------------------------------------------"<<endl;

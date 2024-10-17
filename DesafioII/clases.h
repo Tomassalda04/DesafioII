@@ -19,6 +19,7 @@
 
     public:
         EstacionServicio(const string& nombre, const string& codigo, const string& gerente, const string& region,string gps[3],int &cont);
+        ~EstacionServicio();
         void setCantidadCombustible(int _premium,int _regular,int _eco);
         int obtenerCantidadCombustible(const string& tipo) const;
         unsigned char obtenerSurtidores() const;
@@ -76,6 +77,7 @@
 
     public:
         redEstaciones();
+        ~redEstaciones();
         void agregarEstacion(EstacionServicio* nuevaEstacion);
         void eliminarEstacion(string& cod);
         void fijarPrecioCombustible();

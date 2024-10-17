@@ -42,6 +42,10 @@ EstacionServicio::EstacionServicio(const string& nombre, const string& codigo, c
     precioPremiumS = 0.0f; // Asigna un precio inicial
     precioEcoExtraS = 0.0f; // Asigna un precio inicial
 }
+EstacionServicio::~EstacionServicio() {
+    delete[] modeloSurtidor;
+    delete[] estadoSurtidor;
+}
 void EstacionServicio::setCantidadCombustible(int _premium,int _regular,int _eco){
     premium=_premium;
     regular=_regular;
@@ -488,7 +492,12 @@ redEstaciones::redEstaciones() {
     cantVentas=0;
     estaciones = nullptr;
 }
-
+redEstaciones::~redEstaciones() {
+    for (int i = 0; i < cantEstaciones; ++i) {
+        delete estaciones[i];
+    }
+    delete[] estaciones;
+}
 void redEstaciones::agregarEstacion(EstacionServicio* nuevaEstacion){
     EstacionServicio** tempEstacion = new EstacionServicio*[cantEstaciones + 1];
     for (unsigned int i = 0; i < cantEstaciones  ; i++) {

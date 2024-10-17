@@ -43,7 +43,7 @@ int main() {
         cout << "3. SISTEMA NACIONAL DE VERIFICACION DE FUGAS." << endl;
         cout << "4. SIMULACION DE VENTAS" << endl;
         cout << "5. SALIR DEL PROGRAMA" << endl;
-        cin>>opcionMenuPrincipal;
+        opcionMenuPrincipal = obtenerOpcionMenu('5');
         switch (opcionMenuPrincipal){
         case '1':{
             unsigned char opcion;
@@ -57,8 +57,7 @@ int main() {
             cout <<"6. MODIFICAR ESTACIONES." << endl;
             cout <<"7. MOSTRAR ESTACIONES" << endl;
             cout <<"8. SALIR AL MENU PRINCIPAL" <<endl;
-            cin>>opcion;
-            verficarOpcion(opcion);
+            opcion = obtenerOpcionMenu('8');
             switch(opcion){
             case '1':{
                 srand(static_cast<unsigned int>(time(0)));
@@ -214,7 +213,7 @@ int main() {
             cout << "2. ACTIVAR/DESACTIVAR UN SURTIDOR DE UNA E/S." << endl;
             cout << "3. SIMULACION DE VENTAS DEL DIA." << endl;
             cout << "4. VOLVER AL MENU PRINCIPAL." << endl;
-            cin >> opcionEstacionServicio;
+            opcionEstacionServicio = obtenerOpcionMenu('4');
             switch (opcionEstacionServicio) {
             case '1':{
                 cout << " ***AGREGAR O ELIMINAR SURTIDORES.***" << endl;
@@ -278,12 +277,18 @@ int main() {
         }
         case '3':{
             cout << "***SISTEMA NACIONAL DE VERIFICACION DE FUGAS***" << endl;
-            if(red.getCantVentas()==0){
-                cout<<"NO HAY SIMULACIONES DISPONIBLES EN LA RED:"<<endl<<"SALIENDO AL MENU PRINCIPAL..."<<endl<<endl;
-                break;
+            char confi='y';
+            while(confi != 'n' && confi != 'N'){
+                string opcion;
+                mostrarCodigos(red);
+                cout<<"***ELIJA EL CODIGO DE LA ESTACION DE SERVICIO QUE DESEA MANIPULAR***: "<<endl;
+                cin>>opcion;
+                verificarCodigoExistente(red,opcion);
+                red.verificacionDeFugas(opcion);
+                cout << "DESEA VERIFICAR OTRA ESTACION? (y/n): " << endl;
+                cin >> confi;
+                verficarYoN(confi);
             }
-            cout<<"VERIFICANDO FUGAS..."<<endl;
-            //verificacionFugas(red);
             break;
         }
         case '4':{

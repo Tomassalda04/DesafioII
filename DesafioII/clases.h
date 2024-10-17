@@ -8,7 +8,9 @@
         string nombre, codigo, gerente, region;
         string gps[3];
         int regular, premium, ecoExtra;
-        int precioRegularN, precioPremiumN, precioEcoExtraN,precioRegularC, precioPremiumC, precioEcoExtraC,precioRegularS, precioPremiumS, precioEcoExtraS;
+        int precioRegularN, precioPremiumN, precioEcoExtraN,precioRegularC, precioPremiumC, precioEcoExtraC,precioRegularS,
+            precioPremiumS, precioEcoExtraS, PremiumVendido = 0, RegularVendido =0, EcoVendido=0, CantSobrantePremium=0,
+            CantSobranteRegular=0, CantSobranteEco=0, regularInicial, premiumInicial, ecoExtraInicial;
         char surtidores, naves;
         string* modeloSurtidor;
         int ventaDiaPremium,ventaDiaRegular,ventaDiaEcoExtra;
@@ -32,6 +34,7 @@
         bool surtidoresActivos();
         void simulacionVentas(int cantidadMaximaVenta);
         void simulacionVentas();
+        void verificacionDeFugas();
         string* obtenerModelosSurtidores();
         string obtenerNombre();
         string obtenerCodigo();
@@ -91,6 +94,7 @@
         void simulacionVentasEstacion(string codigo);
         void simulacionVentasRed();
         void simulacionVentasSurtidorRed(string codigo);
+        void verificacionDeFugas(string codigo);
         int getCantVentas();
         int getVentasPremiumT();
         int getVentasRegularT();
